@@ -1,0 +1,22 @@
+Package: ggsced
+Type: Package
+Title: 'ggsced': Utilities and helpers for SCED using GGPlot
+Version: 0.1.0
+Authors@R: person(given = "Shawn",
+           family = "Gilroy",
+           role = c("aut", "cre", "cph"),
+           email = "sgilroy1@lsu.edu",
+           comment = c(ORCID = "0000-0002-1097-8366"))
+Maintainer: Shawn P. Gilroy, Ph.D. <sgilroy1@lsu.edu>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Requires: ggplot2, grid, gtable, ggh4x
+Suggests: 
+    fxl,
+    testthat (>= 3.0.0),
+    usethis
+RoxygenNote: 7.2.3
+Config/testthat/edition: 3
