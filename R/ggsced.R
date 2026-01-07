@@ -105,11 +105,13 @@ gg_sced_name_dogleg_lateral <- function(panel, index, n_leg) {
 #'
 #' @param plt ...
 #' @param legs ...
+#' @param offs ...
 #'
 #' @return ...
 #' @export
 #'
 gg_sced <- function(plt, legs,
+                    offs = NULL,
                     verbose = TRUE) {
   if (is.null(plt)) stop('Error: Plot object undefined.')
 
@@ -123,6 +125,8 @@ gg_sced <- function(plt, legs,
 
   # Grobs specific to data to be annotated
   lcl_panels <- gg_sced_get_panels(lcl_ggplot_grobs)
+
+  print(lcl_panels)
 
   # Number of panels as per the drawn figure
   lcl_n_panels = nrow(lcl_panels)
@@ -163,38 +167,126 @@ gg_sced <- function(plt, legs,
       message(paste("Draw", row, "of", lcl_n_panels, "panels, x = ", x_lvl))
       message(paste("npc_x = ", npc_x))
 
-      main_segment_name = gg_sced_name_dogleg(lcl_panel, row, n_leg)
-      main_segment = grid::segmentsGrob(x0 = unit(npc_x, "npc"),
-                                  y0 = unit(1, "npc"),
-                                  x1 = unit(npc_x, "npc"),
-                                  y1 = unit(0, "npc"),
-                                  name = main_segment_name)
-
       dynamic_b = ifelse(has_more_rows == TRUE,
                          lcl_panels[row + 1, "t"] - 1,
                          lcl_panel$t)
 
-      lcl_ggplot_grobs <- gtable::gtable_add_grob(lcl_ggplot_grobs,
-                                          main_segment,
-                                          t = lcl_panel$t,
-                                          l = lcl_panel$l,
-                                          b = dynamic_b,
+      dynamic_offs = ifelse(is.null(offs) == FALSE,
+                            offs[[n_leg]][row],
+                            0)
+
+      draw_short = ifelse(dynamic_offs == 0, FALSE, TRUE)
+
+      if (draw_short == TRUE) {
+
+        dynamic_b = dynamic_b - 2
+
+        # Note: This is the full segment
+        main_segment_name = gg_sced_name_dogleg(lcl_panel, row, n_leg)
+        main_segment = grid::segmentsGrob(x0 = unit(npc_x, "npc"),
+                                          x1 = unit(npc_x, "npc"),
+                                          y0 = unit(1, "npc"),
+                                          y1 = unit(0, "npc"),
                                           name = main_segment_name)
 
-      if (has_more_rows == TRUE) {
-        main_segment_lateral_name = gg_sced_name_dogleg_lateral(lcl_panel, row, n_leg)
+        lcl_ggplot_grobs <- gtable::gtable_add_grob(lcl_ggplot_grobs,
+                                                    main_segment,
+                                                    t = lcl_panel$t,
+                                                    l = lcl_panel$l,
+                                                    #Note: this should connect to the upper portion
+                                                    b = dynamic_b,
+                                                    clip = 'off',
+                                                    z = 1000,
+                                                    name = main_segment_name)
 
-        npc_x2 <- gg_sced_scale_units(pl[row + 1], x_range)
-
-        lateral_segment = grid::segmentsGrob(x0 = unit(npc_x, "npc"),  y0 = unit(1, "npc"),
-                                       x1 = unit(npc_x2, "npc"), y1 = unit(1, "npc"),
-                                       name = main_segment_lateral_name)
+        main_segment_pre = grid::segmentsGrob(x0 = unit(npc_x, "npc"),
+                                              x1 = unit(npc_x, "npc"),
+                                              y0 = unit(1, "npc"),
+                                              y1 = unit(0.5, "npc"),
+                                              name = paste(main_segment_name, 'pre'))
 
         lcl_ggplot_grobs <- gtable::gtable_add_grob(lcl_ggplot_grobs,
-                                            lateral_segment,
-                                            t = lcl_panels[row + 1,]$t,
-                                            l = lcl_panels[row + 1,]$l,
-                                            name = main_segment_lateral_name)
+                                                    main_segment_pre,
+                                                    t = dynamic_b + 1,
+                                                    l = lcl_panel$l,
+                                                    clip = 'off',
+                                                    z = 1000,
+                                                    name = paste(main_segment_name, 'pre'))
+
+
+        if (has_more_rows == TRUE) {
+          main_segment_lateral_name = gg_sced_name_dogleg_lateral(lcl_panel, row, n_leg)
+
+          npc_x2 <- gg_sced_scale_units(pl[row + 1], x_range)
+
+          main_segment_post = grid::segmentsGrob(x0 = unit(npc_x2, "npc"),
+                                                 x1 = unit(npc_x2, "npc"),
+                                                 y0 = unit(0.5, "npc"),
+                                                 y1 = unit(0, "npc"),
+                                                 name = paste(main_segment_name, 'post'))
+
+          lcl_ggplot_grobs <- gtable::gtable_add_grob(lcl_ggplot_grobs,
+                                                      main_segment_post,
+                                                      t = dynamic_b + 1,
+                                                      l = lcl_panel$l,
+                                                      clip = 'off',
+                                                      z = 1000,
+                                                      name = paste(main_segment_name, 'post'))
+
+          lateral_segment2 = grid::segmentsGrob(x0 = unit(npc_x, "npc"),
+                                                x1 = unit(npc_x2, "npc"),
+                                                y0 = unit(0.5, "npc"),
+                                                y1 = unit(0.5, "npc"),
+                                                name = paste0(main_segment_lateral_name, 'asdf'))
+
+          lcl_ggplot_grobs <- gtable::gtable_add_grob(lcl_ggplot_grobs,
+                                                      lateral_segment2,
+                                                      t = lcl_panels[row + 1,]$t - 2,
+                                                      l = lcl_panels[row + 1,]$l,
+                                                      clip = 'off',
+                                                      z = 1000,
+                                                      name = paste0(main_segment_lateral_name, 'asdf'))
+        }
+
+      } else {
+
+        # Note: This is the full segment
+        main_segment_name = gg_sced_name_dogleg(lcl_panel, row, n_leg)
+        main_segment = grid::segmentsGrob(x0 = unit(npc_x, "npc"),
+                                          x1 = unit(npc_x, "npc"),
+                                          y0 = unit(1, "npc"),
+                                          y1 = unit(0, "npc"),
+                                          name = main_segment_name)
+
+        lcl_ggplot_grobs <- gtable::gtable_add_grob(lcl_ggplot_grobs,
+                                                    main_segment,
+                                                    t = lcl_panel$t,
+                                                    l = lcl_panel$l,
+                                                    b = dynamic_b,
+                                                    clip = 'off',
+                                                    z = 1000,
+                                                    name = main_segment_name)
+
+        if (has_more_rows == TRUE) {
+          main_segment_lateral_name = gg_sced_name_dogleg_lateral(lcl_panel, row, n_leg)
+
+          npc_x2 <- gg_sced_scale_units(pl[row + 1], x_range)
+
+          lateral_segment = grid::segmentsGrob(x0 = unit(npc_x, "npc"),
+                                               x1 = unit(npc_x2, "npc"),
+                                               y0 = unit(1, "npc"),
+                                               y1 = unit(1, "npc"),
+                                               name = main_segment_lateral_name)
+
+          lcl_ggplot_grobs <- gtable::gtable_add_grob(lcl_ggplot_grobs,
+                                                      lateral_segment,
+                                                      t = lcl_panels[row + 1,]$t,
+                                                      l = lcl_panels[row + 1,]$l,
+                                                      clip = 'off',
+                                                      z = 1000,
+                                                      name = main_segment_lateral_name)
+
+        }
       }
     }
   }
