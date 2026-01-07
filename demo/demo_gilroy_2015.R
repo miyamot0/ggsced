@@ -1,5 +1,4 @@
 library(ggsced)
-library(fxl)
 library(tidyverse)
 library(ggh4x)
 
@@ -15,7 +14,6 @@ data_labels = data_set %>%
 y_mult = .05
 x_mult = .02
 
-
 p = ggplot(data_set, aes(Session, Responding,
                          group = Condition)) +
   geom_line() +
@@ -24,14 +22,14 @@ p = ggplot(data_set, aes(Session, Responding,
             mapping = aes(x, y,
                           label = Condition),
             hjust = 0.5,
-            vjust = 0.25) +
+            vjust = 0.0625) +
   scale_y_continuous(name = "Percentage Accuracy",
-                     limits = c(0, 100),
+                     limits = c(0, 102.5),
                      breaks = (0:4) * 25,
                      expand = expansion(mult = y_mult)) +
   scale_x_continuous(breaks = c(1:27),
                      limits = c(1, 27),
-                     expand = expansion(mult = x_mult))  +
+                     expand = expansion(mult = x_mult)) +
   facet_grid2(Participant ~ .,
               remove_labels = "x",
               axes = "x") +

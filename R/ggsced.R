@@ -154,14 +154,14 @@ gg_sced <- function(plt, legs,
       has_more_rows = row < lcl_n_panels
 
       params = lcl_ggplot_build$layout$panel_params[[row]]
-      x_range <- params$x.range # [min, max]
+      x_range <- params$x.range
 
       x_lvl = pl[row]
 
       npc_x <- gg_sced_scale_units(x_lvl, x_range)
 
-      #message(paste("Draw", row, "of", lcl_n_panels, "panels, x = ", x_lvl))
-      #message(paste("npc_x = ", npc_x))
+      message(paste("Draw", row, "of", lcl_n_panels, "panels, x = ", x_lvl))
+      message(paste("npc_x = ", npc_x))
 
       main_segment_name = gg_sced_name_dogleg(lcl_panel, row, n_leg)
       main_segment = grid::segmentsGrob(x0 = unit(npc_x, "npc"),

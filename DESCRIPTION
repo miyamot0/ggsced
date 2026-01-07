@@ -15,7 +15,6 @@ Encoding: UTF-8
 LazyData: true
 Requires: ggplot2, grid, gtable, ggh4x
 Suggests: 
-    fxl,
     testthat (>= 3.0.0),
     usethis
 RoxygenNote: 7.2.3
