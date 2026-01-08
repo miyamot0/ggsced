@@ -1,11 +1,11 @@
 test_that("ggsced runs and emits messages as normal", {
-  library(ggplot2)
-
   test_data_frame = data.frame(Participant = c("A", "B", "C"),
                                x = c(1, 2, 3),
                                y = c(0, 0, 0))
 
-  p = ggplot(test_data_frame, aes(x, y)) + facet_wrap(~Participant)
+  p = ggplot2::ggplot(test_data_frame,
+                      ggplot2::aes(x, y)) +
+    ggplot2::facet_wrap(~Participant)
   staggered_pls = list('1' = c(1.5,  2.5, 3.5))
   expect_no_error(ggsced(p, legs = staggered_pls))
   expect_no_warning(ggsced(p, legs = staggered_pls))
@@ -24,13 +24,13 @@ test_that("ggsced should throw with bad plot object", {
 })
 
 test_that("ggsced should throw with bad phase change list", {
-  library(ggplot2)
-
   test_data_frame = data.frame(Participant = c("A", "B", "C"),
                                x = c(1, 2, 3),
                                y = c(0, 0, 0))
 
-  p = ggplot(test_data_frame, aes(x, y)) + facet_wrap(~Participant)
+  p = ggplot2::ggplot(test_data_frame,
+                      ggplot2::aes(x, y)) +
+    ggplot2::facet_wrap(~Participant)
 
   expect_error(ggsced(p, legs = NA), "Phase change points must be a valid ordered list.")
   expect_error(ggsced(p, legs = NULL), "Phase change points must be a valid ordered list.")

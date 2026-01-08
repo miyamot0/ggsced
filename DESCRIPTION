@@ -10,15 +10,17 @@ Authors@R: person(given = "Shawn",
 Maintainer: Shawn P. Gilroy, Ph.D. <sgilroy1@lsu.edu>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-License: MIT
+License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
-Requires: ggplot2, grid, gtable, ggh4x
+Requires: ggplot2, grid, gtable, ggh4x, assert, R (>= 3.5.0)
+Imports: ggplot2, grid, gtable, ggh4x, assert
 Suggests: 
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
-    usethis
+    usethis,
+    tidyverse
 RoxygenNote: 7.2.3
 Config/testthat/edition: 3
 VignetteBuilder: knitr

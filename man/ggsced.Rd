@@ -12,6 +12,8 @@ ggsced(plt, legs, offs = NULL, verbose = FALSE)
 \item{legs}{list of 'legs' to be drawn}
 
 \item{offs}{TODO mapping of lines that require minor offset}
+
+\item{verbose}{Optional ability to view process output (debugging primarily)}
 }
 \value{
 Finalized figure with respective phase change lines embedded.

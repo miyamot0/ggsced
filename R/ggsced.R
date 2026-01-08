@@ -22,6 +22,7 @@
 #' @param plt ggplot object as typically designed/printed in userspace
 #' @param legs list of 'legs' to be drawn
 #' @param offs TODO mapping of lines that require minor offset
+#' @param verbose Optional ability to view process output (debugging primarily)
 #'
 #' @return Finalized figure with respective phase change lines embedded.
 #' @export
@@ -107,10 +108,10 @@ ggsced <- function(plt, legs,
 
         # Note: This is the full segment
         main_segment_name = ggsced_name_dogleg(lcl_panel, row, n_leg)
-        main_segment = grid::segmentsGrob(x0 = unit(npc_x, "npc"),
-                                          x1 = unit(npc_x, "npc"),
-                                          y0 = unit(1, "npc"),
-                                          y1 = unit(0, "npc"),
+        main_segment = grid::segmentsGrob(x0 = grid::unit(npc_x, "npc"),
+                                          x1 = grid::unit(npc_x, "npc"),
+                                          y0 = grid::unit(1, "npc"),
+                                          y1 = grid::unit(0, "npc"),
                                           name = main_segment_name)
 
         lcl_ggplot_grobs <- gtable::gtable_add_grob(lcl_ggplot_grobs,
@@ -123,10 +124,10 @@ ggsced <- function(plt, legs,
                                                     z = 1000,
                                                     name = main_segment_name)
 
-        main_segment_pre = grid::segmentsGrob(x0 = unit(npc_x, "npc"),
-                                              x1 = unit(npc_x, "npc"),
-                                              y0 = unit(1, "npc"),
-                                              y1 = unit(0.5, "npc"),
+        main_segment_pre = grid::segmentsGrob(x0 = grid::unit(npc_x, "npc"),
+                                              x1 = grid::unit(npc_x, "npc"),
+                                              y0 = grid::unit(1, "npc"),
+                                              y1 = grid::unit(0.5, "npc"),
                                               name = paste(main_segment_name, 'pre'))
 
         lcl_ggplot_grobs <- gtable::gtable_add_grob(lcl_ggplot_grobs,
@@ -143,10 +144,10 @@ ggsced <- function(plt, legs,
 
           npc_x2 <- ggsced_scale_units(pl[row + 1], x_range)
 
-          main_segment_post = grid::segmentsGrob(x0 = unit(npc_x2, "npc"),
-                                                 x1 = unit(npc_x2, "npc"),
-                                                 y0 = unit(0.5, "npc"),
-                                                 y1 = unit(0, "npc"),
+          main_segment_post = grid::segmentsGrob(x0 = grid::unit(npc_x2, "npc"),
+                                                 x1 = grid::unit(npc_x2, "npc"),
+                                                 y0 = grid::unit(0.5, "npc"),
+                                                 y1 = grid::unit(0, "npc"),
                                                  name = paste(main_segment_name, 'post'))
 
           lcl_ggplot_grobs <- gtable::gtable_add_grob(lcl_ggplot_grobs,
@@ -157,10 +158,10 @@ ggsced <- function(plt, legs,
                                                       z = 1000,
                                                       name = paste(main_segment_name, 'post'))
 
-          lateral_segment2 = grid::segmentsGrob(x0 = unit(npc_x, "npc"),
-                                                x1 = unit(npc_x2, "npc"),
-                                                y0 = unit(0.5, "npc"),
-                                                y1 = unit(0.5, "npc"),
+          lateral_segment2 = grid::segmentsGrob(x0 = grid::unit(npc_x, "npc"),
+                                                x1 = grid::unit(npc_x2, "npc"),
+                                                y0 = grid::unit(0.5, "npc"),
+                                                y1 = grid::unit(0.5, "npc"),
                                                 name = paste0(main_segment_lateral_name, 'asdf'))
 
           lcl_ggplot_grobs <- gtable::gtable_add_grob(lcl_ggplot_grobs,
@@ -176,10 +177,10 @@ ggsced <- function(plt, legs,
 
         # Note: This is the full segment
         main_segment_name = ggsced_name_dogleg(lcl_panel, row, n_leg)
-        main_segment = grid::segmentsGrob(x0 = unit(npc_x, "npc"),
-                                          x1 = unit(npc_x, "npc"),
-                                          y0 = unit(1, "npc"),
-                                          y1 = unit(0, "npc"),
+        main_segment = grid::segmentsGrob(x0 = grid::unit(npc_x, "npc"),
+                                          x1 = grid::unit(npc_x, "npc"),
+                                          y0 = grid::unit(1, "npc"),
+                                          y1 = grid::unit(0, "npc"),
                                           name = main_segment_name)
 
         lcl_ggplot_grobs <- gtable::gtable_add_grob(lcl_ggplot_grobs,
@@ -196,10 +197,10 @@ ggsced <- function(plt, legs,
 
           npc_x2 <- ggsced_scale_units(pl[row + 1], x_range)
 
-          lateral_segment = grid::segmentsGrob(x0 = unit(npc_x, "npc"),
-                                               x1 = unit(npc_x2, "npc"),
-                                               y0 = unit(1, "npc"),
-                                               y1 = unit(1, "npc"),
+          lateral_segment = grid::segmentsGrob(x0 = grid::unit(npc_x, "npc"),
+                                               x1 = grid::unit(npc_x2, "npc"),
+                                               y0 = grid::unit(1, "npc"),
+                                               y1 = grid::unit(1, "npc"),
                                                name = main_segment_lateral_name)
 
           lcl_ggplot_grobs <- gtable::gtable_add_grob(lcl_ggplot_grobs,
