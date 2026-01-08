@@ -1,8 +1,8 @@
 ---
-title: "ggsced-vignette"
+title: "Introduction to ggsced: Single-Case Experimental Design Visualizations with ggplot2"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{ggsced-vignette}
+  %\VignetteIndexEntry{Introduction to ggsced: Single-Case Experimental Design Visualizations with ggplot2}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -10,10 +10,263 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width = 8,
+  fig.height = 6,
+  warning = FALSE,
+  message = FALSE
 )
 ```
 
 ```{r setup}
 library(ggsced)
+library(tidyverse)
+library(ggh4x)
 ```
+
+## Introduction
+
+The `ggsced` package extends the powerful `ggplot2` visualization framework to provide specialized tools for creating high-quality graphics for Single-Case Experimental Design (SCED) research. SCED studies are a crucial methodology in behavioral and educational research, where individual participants serve as their own controls through carefully designed experimental phases.
+
+## Core Goals and Philosophy
+
+The primary goal of `ggsced` is to bridge the gap between the flexibility of `ggplot2` and the specific visualization needs of single-case researchers. Traditional plotting approaches often fall short when dealing with:
+
+- **Phase Change Lines**: Clear visual demarcation between experimental phases
+- **Multiple Baseline Designs**: Staggered intervention implementation across participants
+- **Complex Data Patterns**: Multiple dependent variables plotted simultaneously
+- **Professional Standards**: Publication-ready figures that meet APA and journal requirements
+
+### Key Features
+
+`ggsced` provides several specialized functions that work seamlessly with `ggplot2`:
+
+- `gg_sced()`: Core function for adding phase change lines to existing ggplot objects
+- `gg_sced_style_x()` and `gg_sced_style_y()`: Styling functions for axes that follow SCED conventions
+- `gg_sced_get_panels()`: Utilities for managing multi-panel layouts
+- Theme and scaling functions optimized for single-case data visualization
+
+## Package Architecture
+
+The package is designed with modularity and extensibility in mind:
+
+1. **Core Visualization Functions** (`ggsced.R`): Primary plotting utilities
+2. **Theme and Styling** (`ggsced_theme.R`): Consistent visual styling
+3. **Utility Functions** (`ggsced_utils.R`): Helper functions for data manipulation
+4. **Reporting Tools** (`ggsced_reporting.R`): Functions for generating publication-ready outputs
+
+## Demonstration Examples
+
+This vignette includes several comprehensive examples using real research data to demonstrate the package's capabilities. Each example showcases different aspects of single-case experimental design visualization.
+
+## Example 1: Multiple Baseline Design (Gilroy et al., 2015)
+
+The first demonstration uses data from Gilroy et al. (2015), which represents a classic multiple baseline across participants design. This example showcases how to create publication-quality figures with staggered intervention implementation.
+
+```{r demo-gilroy-2015, eval=TRUE}
+# Load the demonstration script for Gilroy et al. 2015
+# This example demonstrates a multiple baseline design with phase change lines
+
+library(ggsced)
+library(tidyverse)
+library(ggh4x)
+
+data_set <- Gilroyetal2015
+
+# Create condition labels for the plot
+data_labels <- data_set %>%
+  select(Participant, Condition) %>%
+  filter(Participant == "Andrew") %>%
+  unique() %>%
+  mutate(
+    x = c(2.5, 9, 18.5, 25.5),
+    y = 100
+  )
+
+# Set plot scaling parameters
+y_mult <- .05
+x_mult <- .02
+
+# Create the base ggplot
+p <- ggplot(data_set, aes(Session, Responding, group = Condition)) +
+  geom_line() +
+  geom_point(size = 3) +
+  geom_text(
+    data = data_labels,
+    mapping = aes(x, y, label = Condition),
+    family = "Times New Roman",
+    hjust = 0.5,
+    vjust = 0.0625
+  ) +
+  scale_y_continuous(
+    name = "Percentage Accuracy",
+    limits = c(0, 102.5),
+    breaks = (0:4) * 25,
+    expand = expansion(mult = y_mult)
+  ) +
+  scale_x_continuous(
+    breaks = c(1:27),
+    limits = c(1, 27),
+    expand = expansion(mult = x_mult)
+  ) +
+  facet_grid2(Participant ~ .,
+    remove_labels = "x",
+    axes = "x"
+  ) +
+  theme(
+    text = element_text(family = "Times New Roman", size = 14, color = "black"),
+    panel.background = element_blank(),
+    strip.background = element_blank(),
+    strip.text = element_blank()
+  ) +
+  gg_sced_style_x(x_mult, lwd = 2) +
+  gg_sced_style_y(y_mult, lwd = 2)
+
+# Define staggered phase change lines for multiple baseline design
+staggered_pls <- list(
+  "1" = c(4.5, 11.5, 18.5),
+  "2" = c(13.5, 20.5, 23.5),
+  "3" = c(23.5, 23.5, 23.5)
+)
+
+# Add phase change lines using ggsced
+final_plot <- gg_sced(p, staggered_pls)
+```
+
+### Key Features Demonstrated:
+
+- **Multiple Baseline Design**: Staggered intervention implementation across three participants
+- **Phase Change Lines**: Clear visual separation between baseline and intervention phases
+- **Professional Styling**: Publication-ready aesthetics with proper fonts and scaling
+- **Faceted Layout**: Separate panels for each participant while maintaining visual coherence
+
+## Example 2: Cross-lagged Reversal Design across Participants (Gilroy et al., 2021)
+
+The third demonstration presents data from Gilroy et al. (2021), illustrating an alternating treatment design with multiple dependent measures.
+
+```{r demo-gilroy-2021, eval=TRUE}
+# Load the demonstration script for Gilroy et al. 2021
+# This example demonstrates alternating treatment design
+
+library(ggsced)
+library(tidyverse)
+library(ggh4x)
+
+data <- Gilroyetal2021
+
+y_mult <- .05
+x_mult <- .02
+
+# Create condition labels
+data_labels <- data %>%
+  select(Participant, Condition) %>%
+  filter(Participant == "John") %>%
+  unique() %>%
+  mutate(
+    x = c(2, 5, 8, 11, 14, 18),
+    Label = gsub("2", "", Condition),
+    y = 20
+  )
+
+# Create plot with two dependent variables
+p <- ggplot(data, aes(Session, Responding, group = Condition)) +
+  geom_line() +
+  geom_point(size = 2.5, pch = 21, fill = "black") +
+
+  # Add reinforcer data
+  geom_line(mapping = aes(Session, Reinforcers), lty = 2) +
+  geom_point(
+    mapping = aes(Session, Reinforcers),
+    size = 2.5, pch = 24, fill = "white"
+  ) +
+
+  # Add condition labels
+  geom_text(
+    data = data_labels,
+    mapping = aes(x, y, label = Label),
+    inherit.aes = FALSE
+  ) +
+  scale_x_continuous(
+    breaks = c(1:25), limits = c(1, 25),
+    expand = expansion(mult = x_mult)
+  ) +
+  facet_grid2(Participant ~ .,
+    scales = "free_y",
+    remove_labels = "x", axes = "x"
+  ) +
+  theme(
+    text = element_text(
+      size = 14,
+      color = "black"
+    ),
+    panel.background = element_blank(),
+    strip.background = element_blank(),
+    strip.text = element_blank()
+  ) +
+  gg_sced_style_x(x_mult, lwd = 2) +
+  gg_sced_style_y(y_mult, lwd = 2)
+
+staggered_pls <- list(
+  "1" = c(3.5, 3.5, 3.5),
+  "2" = c(6.5, 6.5, 8.5),
+  "3" = c(9.5, 9.5, 11.5),
+  "4" = c(12.5, 16.5, 16.5),
+  "5" = c(15.5, 22.5, 19.5)
+)
+
+offsets_pls <- list(
+  "1" = c(0, 0, 0),
+  "2" = c(0, 0, 0),
+  "3" = c(0, 0, 0),
+  "4" = c(0, 0, 0),
+  "5" = c(-1, 0, 0)
+)
+
+gg_sced(p, legs = staggered_pls, offs = offsets_pls)
+```
+
+### Key Features Demonstrated:
+
+- **Alternating Treatment Design**: Rapid alternation between different intervention conditions
+- **Dual Dependent Variables**: Response rate and reinforcement rate plotted together
+- **Flexible Scaling**: Independent y-axis scaling for different participants
+- **Condition Labeling**: Clear identification of different treatment phases
+
+## Best Practices and Recommendations
+
+When using `ggsced` for your single-case research visualizations, consider the following best practices:
+
+### 1. Data Preparation
+- Ensure your data includes clear participant, session, and condition variables
+- Use consistent naming conventions across studies
+- Consider long-format data structures for optimal compatibility with ggplot2
+
+### 2. Visual Design Principles
+- Use the package's styling functions to maintain consistency across figures
+- Choose appropriate point shapes and line types to distinguish between measures
+- Ensure adequate contrast and accessibility in your color choices
+
+### 3. Phase Change Implementation
+- Plan your phase change points carefully to align with your experimental design
+- Use the staggered phase change lists for multiple baseline designs
+- Consider offset options for overlapping phase changes
+
+### 4. Publication Considerations
+- Use consistent fonts (Times New Roman is standard for many journals)
+- Ensure appropriate figure dimensions and resolution for your target publication
+- Include clear legends and labels for all plotted elements
+
+## Conclusion
+
+The `ggsced` package represents a significant advancement in single-case research visualization capabilities. By extending `ggplot2` with specialized functions for SCED research, it enables researchers to create publication-quality figures that accurately represent the complexity and rigor of single-case experimental designs.
+
+The package's modular design ensures that it can adapt to the diverse needs of single-case researchers while maintaining the flexibility and power that makes `ggplot2` the gold standard for statistical graphics in R.
+
+## Additional Resources
+
+- Package documentation: `help(package = "ggsced")`
+- Demo files: Available in the package's `demo/` directory
+- GitHub repository: [Include repository URL]
+- Related packages: `ggplot2`, `ggh4x`, `grid`, `gtable`
+
+For questions, bug reports, or feature requests, please visit the package's GitHub repository or contact the maintainer.
