@@ -36,7 +36,7 @@ p = ggplot(data_set, aes(Session, Responding,
             hjust = 1,
             vjust = 0) +
   scale_y_continuous(name = "Percentage Accuracy",
-                     limits = c(0, 102.5),
+                     limits = c(0, 100),
                      breaks = (0:4) * 25,
                      expand = expansion(mult = y_mult)) +
   scale_x_continuous(breaks = c(1:27),
