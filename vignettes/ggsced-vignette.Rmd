@@ -43,8 +43,8 @@ The primary philosophy behind `ggsced` is to leverage the existing capabilities 
 
 `ggsced` provides several specialized functions that work seamlessly with `ggplot2`:
 
-- `gg_sced()`: Core function for adding phase change lines to existing ggplot objects
-- `gg_sced_style_x()` and `gg_sced_style_y()`: Styling functions for axes that follow SCED conventions
+- `ggsced()`: Core function for adding phase change lines to existing ggplot objects
+- `ggsced_style_x()` and `ggsced_style_y()`: Styling functions for axes that follow SCED conventions
 
 For the most part, ggsced is a 'helper' package that extends ggplot2 functionality for SCED researchers without the need for boilerplate code or alternative plotting tools.
 
@@ -78,7 +78,7 @@ The first demonstration uses data from Gilroy et al. (2015), which represents a 
 
 ### Step 1. Load Data and Prepare Base Plot
 
-For convenience, the `gg_sced` package includes sample datasets from published SCED research. Here, we load the Gilroy et al. (2015) dataset and prepare the base plot and show the respective columns.
+For convenience, the `ggsced` package includes sample datasets from published SCED research. Here, we load the Gilroy et al. (2015) dataset and prepare the base plot and show the respective columns.
 
 ```{r demo-gilroy-2015-step-1, eval=TRUE}
 library(ggsced)
@@ -108,11 +108,13 @@ data_labels <- data_set %>%
     y = 100
   )
 
-participant_labels = data_set %>%
+participant_labels <- data_set %>%
   select(Participant) %>%
   unique() %>%
-  mutate(x = rep(27, 3),
-         y = 0)
+  mutate(
+    x = rep(27, 3),
+    y = 0
+  )
 
 # Create the base ggplot
 p <- ggplot(data_set, aes(Session, Responding, group = Condition)) +
@@ -122,12 +124,15 @@ p <- ggplot(data_set, aes(Session, Responding, group = Condition)) +
     data = data_labels,
     mapping = aes(x, y, label = Condition)
   ) +
-  geom_text(data = participant_labels,
-            mapping = aes(x, y,
-                          label = Participant),
-            inherit.aes = FALSE,
-            hjust = 1,
-            vjust = 0) +
+  geom_text(
+    data = participant_labels,
+    mapping = aes(x, y,
+      label = Participant
+    ),
+    inherit.aes = FALSE,
+    hjust = 1,
+    vjust = 0
+  ) +
   facet_grid2(Participant ~ .,
     remove_labels = "x",
     axes = "x"
@@ -155,11 +160,13 @@ data_labels <- data_set %>%
     y = 100
   )
 
-participant_labels = data_set %>%
+participant_labels <- data_set %>%
   select(Participant) %>%
   unique() %>%
-  mutate(x = rep(27, 3),
-         y = 0)
+  mutate(
+    x = rep(27, 3),
+    y = 0
+  )
 
 # Create the base ggplot
 p <- ggplot(data_set, aes(Session, Responding, group = Condition)) +
@@ -169,12 +176,15 @@ p <- ggplot(data_set, aes(Session, Responding, group = Condition)) +
     data = data_labels,
     mapping = aes(x, y, label = Condition)
   ) +
-  geom_text(data = participant_labels,
-            mapping = aes(x, y,
-                          label = Participant),
-            inherit.aes = FALSE,
-            hjust = 1,
-            vjust = 0) +
+  geom_text(
+    data = participant_labels,
+    mapping = aes(x, y,
+      label = Participant
+    ),
+    inherit.aes = FALSE,
+    hjust = 1,
+    vjust = 0
+  ) +
   facet_grid2(Participant ~ .,
     remove_labels = "x",
     axes = "x"
@@ -188,7 +198,7 @@ staggered_pls <- list(
 )
 
 # Add phase change lines using ggsced
-gg_sced(p, staggered_pls)
+ggsced(p, staggered_pls)
 ```
 
 This achieves the long-desired effect of clearly demarcating the different phases of the experimental design across multiple participants. However, it warrants noting that this is just one of several conventions expected in SCED figures and other aesthetic features are also critical for publication.
@@ -208,11 +218,13 @@ data_labels <- data_set %>%
     y = 100
   )
 
-participant_labels = data_set %>%
+participant_labels <- data_set %>%
   select(Participant) %>%
   unique() %>%
-  mutate(x = rep(27, 3),
-         y = 0)
+  mutate(
+    x = rep(27, 3),
+    y = 0
+  )
 
 # Set plot scaling parameters
 y_mult <- .05
@@ -228,12 +240,15 @@ p <- ggplot(data_set, aes(Session, Responding, group = Condition)) +
     hjust = 0.5,
     vjust = 0.0625
   ) +
-  geom_text(data = participant_labels,
-            mapping = aes(x, y,
-                          label = Participant),
-            inherit.aes = FALSE,
-            hjust = 1,
-            vjust = 0) +
+  geom_text(
+    data = participant_labels,
+    mapping = aes(x, y,
+      label = Participant
+    ),
+    inherit.aes = FALSE,
+    hjust = 1,
+    vjust = 0
+  ) +
   scale_y_continuous(
     name = "Percentage Accuracy",
     limits = c(0, 102.5),
@@ -255,8 +270,8 @@ p <- ggplot(data_set, aes(Session, Responding, group = Condition)) +
     strip.background = element_blank(),
     strip.text = element_blank()
   ) +
-  gg_sced_style_x(x_mult, lwd = 2) +
-  gg_sced_style_y(y_mult, lwd = 2)
+  ggsced_style_x(x_mult, lwd = 2) +
+  ggsced_style_y(y_mult, lwd = 2)
 
 # Define staggered phase change lines for multiple baseline design
 staggered_pls <- list(
@@ -266,7 +281,7 @@ staggered_pls <- list(
 )
 
 # Add phase change lines using ggsced
-final_plot <- gg_sced(p, staggered_pls)
+final_plot <- ggsced(p, staggered_pls)
 ```
 
 As illustrated here, the final plot now adheres to SCED conventions, with clear phase change lines, appropriate axis scaling, and professional styling suitable for publication.
@@ -341,8 +356,8 @@ p <- ggplot(data, aes(Session, Responding, group = Condition)) +
     strip.background = element_blank(),
     strip.text = element_blank()
   ) +
-  gg_sced_style_x(x_mult, lwd = 2) +
-  gg_sced_style_y(y_mult, lwd = 2)
+  ggsced_style_x(x_mult, lwd = 2) +
+  ggsced_style_y(y_mult, lwd = 2)
 
 staggered_pls <- list(
   "1" = c(3.5, 3.5, 3.5),
@@ -360,7 +375,7 @@ offsets_pls <- list(
   "5" = c(-1, 0, 0)
 )
 
-gg_sced(p, legs = staggered_pls, offs = offsets_pls)
+ggsced(p, legs = staggered_pls, offs = offsets_pls)
 ```
 
 ### Key Features Demonstrated:

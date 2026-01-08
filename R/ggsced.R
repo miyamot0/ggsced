@@ -15,7 +15,7 @@
 ## You should have received a copy of the GNU General Public License
 ## along with ggsced  If not, see <http://www.gnu.org/licenses/gpl-2.0.html>.
 
-#' gg_sced
+#' ggsced
 #'
 #' Core exported function to facilitate the drawing of phase change lines atop a ggplot object. Primarily designed to be used *after* the plot is finalized, with the lines being the last element drawn at the highest z index (i.e., atop all elements).
 #'
@@ -26,9 +26,9 @@
 #' @return Finalized figure with respective phase change lines embedded.
 #' @export
 #'
-gg_sced <- function(plt, legs,
-                    offs = NULL,
-                    verbose = FALSE) {
+ggsced <- function(plt, legs,
+                   offs = NULL,
+                   verbose = FALSE) {
 
   assert::assert(!is.null(plt),
                  ("ggplot" %in% class(plt)),
@@ -48,7 +48,7 @@ gg_sced <- function(plt, legs,
 
   # TODO: Testthis
   # Grobs specific to data to be annotated
-  lcl_panels <- gg_sced_get_panels(lcl_ggplot_grobs)
+  lcl_panels <- ggsced_get_panels(lcl_ggplot_grobs)
 
   # TODO: Testthis
   # Number of panels as per the drawn figure
@@ -82,13 +82,13 @@ gg_sced <- function(plt, legs,
 
       x_lvl = pl[row]
 
-      npc_x <- gg_sced_scale_units(x_lvl, x_range)
+      npc_x <- ggsced_scale_units(x_lvl, x_range)
 
-      gg_sced_output_console(paste("Draw", row, "of", lcl_n_panels,
+      ggsced_output_console(paste("Draw", row, "of", lcl_n_panels,
                                    "panels, x = ", x_lvl),
                              verbose)
 
-      gg_sced_output_console(paste("npc_x = ", npc_x),
+      ggsced_output_console(paste("npc_x = ", npc_x),
                              verbose)
 
       dynamic_b = ifelse(has_more_rows == TRUE,
@@ -106,7 +106,7 @@ gg_sced <- function(plt, legs,
         dynamic_b = dynamic_b - 2
 
         # Note: This is the full segment
-        main_segment_name = gg_sced_name_dogleg(lcl_panel, row, n_leg)
+        main_segment_name = ggsced_name_dogleg(lcl_panel, row, n_leg)
         main_segment = grid::segmentsGrob(x0 = unit(npc_x, "npc"),
                                           x1 = unit(npc_x, "npc"),
                                           y0 = unit(1, "npc"),
@@ -119,7 +119,7 @@ gg_sced <- function(plt, legs,
                                                     l = lcl_panel$l,
                                                     #Note: this should connect to the upper portion
                                                     b = dynamic_b,
-                                                    clip = 'off',
+                                                    #clip = 'off',
                                                     z = 1000,
                                                     name = main_segment_name)
 
@@ -133,15 +133,15 @@ gg_sced <- function(plt, legs,
                                                     main_segment_pre,
                                                     t = dynamic_b + 1,
                                                     l = lcl_panel$l,
-                                                    clip = 'off',
+                                                    #clip = 'off',
                                                     z = 1000,
                                                     name = paste(main_segment_name, 'pre'))
 
 
         if (has_more_rows == TRUE) {
-          main_segment_lateral_name = gg_sced_name_dogleg_lateral(lcl_panel, row, n_leg)
+          main_segment_lateral_name = ggsced_name_dogleg_lateral(lcl_panel, row, n_leg)
 
-          npc_x2 <- gg_sced_scale_units(pl[row + 1], x_range)
+          npc_x2 <- ggsced_scale_units(pl[row + 1], x_range)
 
           main_segment_post = grid::segmentsGrob(x0 = unit(npc_x2, "npc"),
                                                  x1 = unit(npc_x2, "npc"),
@@ -153,7 +153,7 @@ gg_sced <- function(plt, legs,
                                                       main_segment_post,
                                                       t = dynamic_b + 1,
                                                       l = lcl_panel$l,
-                                                      clip = 'off',
+                                                      #clip = 'off',
                                                       z = 1000,
                                                       name = paste(main_segment_name, 'post'))
 
@@ -167,7 +167,7 @@ gg_sced <- function(plt, legs,
                                                       lateral_segment2,
                                                       t = lcl_panels[row + 1,]$t - 2,
                                                       l = lcl_panels[row + 1,]$l,
-                                                      clip = 'off',
+                                                      #clip = 'off',
                                                       z = 1000,
                                                       name = paste0(main_segment_lateral_name, 'asdf'))
         }
@@ -175,7 +175,7 @@ gg_sced <- function(plt, legs,
       } else {
 
         # Note: This is the full segment
-        main_segment_name = gg_sced_name_dogleg(lcl_panel, row, n_leg)
+        main_segment_name = ggsced_name_dogleg(lcl_panel, row, n_leg)
         main_segment = grid::segmentsGrob(x0 = unit(npc_x, "npc"),
                                           x1 = unit(npc_x, "npc"),
                                           y0 = unit(1, "npc"),
@@ -187,14 +187,14 @@ gg_sced <- function(plt, legs,
                                                     t = lcl_panel$t,
                                                     l = lcl_panel$l,
                                                     b = dynamic_b,
-                                                    clip = 'off',
+                                                    #clip = 'off',
                                                     z = 1000,
                                                     name = main_segment_name)
 
         if (has_more_rows == TRUE) {
-          main_segment_lateral_name = gg_sced_name_dogleg_lateral(lcl_panel, row, n_leg)
+          main_segment_lateral_name = ggsced_name_dogleg_lateral(lcl_panel, row, n_leg)
 
-          npc_x2 <- gg_sced_scale_units(pl[row + 1], x_range)
+          npc_x2 <- ggsced_scale_units(pl[row + 1], x_range)
 
           lateral_segment = grid::segmentsGrob(x0 = unit(npc_x, "npc"),
                                                x1 = unit(npc_x2, "npc"),
@@ -206,7 +206,7 @@ gg_sced <- function(plt, legs,
                                                       lateral_segment,
                                                       t = lcl_panels[row + 1,]$t,
                                                       l = lcl_panels[row + 1,]$l,
-                                                      clip = 'off',
+                                                      #clip = 'off',
                                                       z = 1000,
                                                       name = main_segment_lateral_name)
 

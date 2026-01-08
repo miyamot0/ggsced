@@ -52,8 +52,8 @@ p = ggplot(data_set, aes(Session, Responding,
     strip.background = element_blank(),
     strip.text = element_blank()
   ) +
-  gg_sced_style_x(x_mult, lwd = 2) +
-  gg_sced_style_y(y_mult, lwd = 2)
+  ggsced_style_x(x_mult, lwd = 2) +
+  ggsced_style_y(y_mult, lwd = 2)
 
 staggered_pls = list(
   '1' = c(4.5,  11.5, 18.5),
@@ -61,10 +61,12 @@ staggered_pls = list(
   '3' = c(23.5, 23.5, 23.5)
 )
 
-# svg(filename = 'figs/GilroyEtAl2015.svg',
-#    width = 8,
-#    height = 6)
+# png(filename = 'figs/GilroyEtAl2015.png',
+#     units = "in",
+#     res = 600,
+#     width = 8,
+#     height = 6)
 
-gg_sced(p, legs = staggered_pls)
+ggsced(p, legs = staggered_pls)
 
 # dev.off()

@@ -22,8 +22,8 @@ Single-case experimental designs require specific visualization conventions that
 
 ### Core Visualization Functions
 
-- **`gg_sced()`**: Primary function for adding phase change lines to existing ggplot objects
-- **`gg_sced_style_x()`** and **`gg_sced_style_y()`**: Styling functions for axes that follow SCED conventions with broken axis appearance
+- **`ggsced()`**: Primary function for adding phase change lines to existing ggplot objects
+- **`ggsced_style_x()`** and **`ggsced_style_y()`**: Styling functions for axes that follow SCED conventions with broken axis appearance
 
 ### Design Pattern Support
 
@@ -67,8 +67,8 @@ p <- ggplot(data_set, aes(Session, Responding, group = Condition)) +
   geom_line() +
   geom_point(size = 3) +
   facet_grid(Participant ~ .) +
-  gg_sced_style_x(0.02, lwd = 2) +
-  gg_sced_style_y(0.05, lwd = 2) +
+  ggsced_style_x(0.02, lwd = 2) +
+  ggsced_style_y(0.05, lwd = 2) +
   theme_minimal()
 
 # Define staggered phase change lines for multiple baseline design
@@ -79,10 +79,10 @@ staggered_pls <- list(
 )
 
 # Add phase change lines
-gg_sced(p, staggered_pls)
+ggsced(p, staggered_pls)
 ```
 
-![Gilroy et al. (2015) Figure](https://github.com/miyamot0/ggsced/blob/main/figs/GilroyEtAl2015.svg?raw=true)
+![Gilroy et al. (2015) Figure](https://github.com/miyamot0/ggsced/blob/main/figs/GilroyEtAl2015.png?raw=true)
 
 ### Example Augmented Multiple Baseline: Gilroy et al. (2021)
 
@@ -149,8 +149,8 @@ p = ggplot(data, aes(Session, Responding,
     strip.background = element_blank(),
     strip.text = element_blank()
   ) +
-  gg_sced_style_x(x_mult, lwd = 2) +
-  gg_sced_style_y(y_mult, lwd = 2)
+  ggsced_style_x(x_mult, lwd = 2) +
+  ggsced_style_y(y_mult, lwd = 2)
 
 staggered_pls = list(
   '1' = c(3.5,   3.5,   3.5),
@@ -168,10 +168,10 @@ offsets_pls = list(
   '5' = c(-1, 0, 0)
 )
 
-gg_sced(p, legs = staggered_pls, offs = offsets_pls)
+ggsced(p, legs = staggered_pls, offs = offsets_pls)
 ```
 
-![Gilroy et al. (2021) Figure](https://github.com/miyamot0/ggsced/blob/main/figs/GilroyEtAl2021.svg?raw=true)
+![Gilroy et al. (2021) Figure](https://github.com/miyamot0/ggsced/blob/main/figs/GilroyEtAl2021.png?raw=true)
 
 ## Other Example Datasets
 

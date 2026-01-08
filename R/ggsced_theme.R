@@ -15,7 +15,7 @@
 ## You should have received a copy of the GNU General Public License
 ## along with ggsced  If not, see <http://www.gnu.org/licenses/gpl-2.0.html>.
 
-#' gg_sced_style_y
+#' ggsced_style_y
 #'
 #' This is a convenience element designed to support a more complete interpretation of SCED-specific style conventions through ggplot. Specifically, an axis is drawn with a specific manner of expansion to support the broken axis (i.e., non-connected x/y) expected of SCED-specific publication guidelines.
 #'
@@ -26,7 +26,7 @@
 #' @return Annotation to simulate a disconnected y-axis via expansion
 #' @export
 #'
-gg_sced_style_y <- function(expansion = 0.00, lwd = 2, col = "black") {
+ggsced_style_y <- function(expansion = 0.00, lwd = 2, col = "black") {
   ggplot2::annotation_custom(
     grid::linesGrob(x = c(0, 0),
                     y = grid::unit(c(expansion, 1 - expansion), "npc"),
@@ -34,7 +34,7 @@ gg_sced_style_y <- function(expansion = 0.00, lwd = 2, col = "black") {
   )
 }
 
-#' gg_sced_style_x
+#' ggsced_style_x
 #'
 #' This is a convenience element designed to support a more complete interpretation of SCED-specific style conventions through ggplot. Specifically, an axis is drawn with a specific manner of expansion to support the broken axis (i.e., non-connected x/y) expected of SCED-specific publication guidelines.
 #'
@@ -45,7 +45,7 @@ gg_sced_style_y <- function(expansion = 0.00, lwd = 2, col = "black") {
 #' @return Annotation to simulate a disconnected y-axis via expansion
 #' @export
 #'
-gg_sced_style_x <- function(expansion = 0.00, lwd = 2, col = "black") {
+ggsced_style_x <- function(expansion = 0.00, lwd = 2, col = "black") {
   ggplot2::annotation_custom(
     grid::linesGrob(x = grid::unit(c(expansion, 1 - expansion), "npc"),
                     y = c(0, 0),

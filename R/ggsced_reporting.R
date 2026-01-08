@@ -15,13 +15,13 @@
 ## You should have received a copy of the GNU General Public License
 ## along with ggsced  If not, see <http://www.gnu.org/licenses/gpl-2.0.html>.
 
-#' gg_sced_output_console
+#' ggsced_output_console
 #'
 #' Optional output function to support debugging (mainly for testing)
 #'
 #' @param msg Message to be output to console
 #' @param output Boolean to discern whether or not to output message
 #'
-gg_sced_output_console <- function(msg, output) {
+ggsced_output_console <- function(msg, output) {
   if (output == TRUE) message(msg)
 }

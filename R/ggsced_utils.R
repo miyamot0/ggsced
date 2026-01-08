@@ -15,7 +15,7 @@
 ## You should have received a copy of the GNU General Public License
 ## along with ggsced  If not, see <http://www.gnu.org/licenses/gpl-2.0.html>.
 
-#' gg_sced_scale_units
+#' ggsced_scale_units
 #'
 #' Internal helper to discern exactly where a vertical would need to be placed within a specific grob (i.e., panel grob). Uses the domain and phase change location as a reference to convert to npc units for gtable and grid.
 #'
@@ -24,11 +24,11 @@
 #'
 #' @return A proportional value given value in a panel domain
 #'
-gg_sced_scale_units <- function(session_value, domain_size) {
+ggsced_scale_units <- function(session_value, domain_size) {
   (session_value - domain_size[1]) / (domain_size[2] - domain_size[1])
 }
 
-#' gg_sced_get_panels
+#' ggsced_get_panels
 #'
 #' Honestly, a bit of a 'hackish' solution to extract grobs that are associated with data to be drawn. Probably fragile and specific to modern gg implementations, but probably the close we'll get. Subject to change.
 #'
@@ -36,7 +36,7 @@ gg_sced_scale_units <- function(session_value, domain_size) {
 #'
 #' @return filtered list of grobs restricted to faceted levels
 #'
-gg_sced_get_panels <- function(ggplot_grobs) {
+ggsced_get_panels <- function(ggplot_grobs) {
   # TODO: Assert types
 
   lcl_panels = ggplot_grobs$layout
@@ -45,7 +45,7 @@ gg_sced_get_panels <- function(ggplot_grobs) {
   return(lcl_panels)
 }
 
-#' gg_sced_name_dogleg
+#' ggsced_name_dogleg
 #'
 #' Grobs need to have unique names lest they get accidentally overwritten. This is a convenience naming function for the 'main' phase break within a facet level.
 #'
@@ -55,13 +55,13 @@ gg_sced_get_panels <- function(ggplot_grobs) {
 #'
 #' @return a name corresponding with unique phase-change grob element
 #'
-gg_sced_name_dogleg <- function(panel, index, n_leg) {
+ggsced_name_dogleg <- function(panel, index, n_leg) {
   # TODO: Assert types
 
   paste0(panel$name, "-phase.change-", index, '-leg-', n_leg)
 }
 
-#' gg_sced_name_dogleg_lateral
+#' ggsced_name_dogleg_lateral
 #'
 #' Grobs need to have unique names lest they get accidentally overwritten. This is a convenience naming function for the 'lateral' part of a phase break within a facet level.
 #'
@@ -71,7 +71,7 @@ gg_sced_name_dogleg <- function(panel, index, n_leg) {
 #'
 #' @return a name corresponding with unique phase-change grob element
 #'
-gg_sced_name_dogleg_lateral <- function(panel, index, n_leg) {
+ggsced_name_dogleg_lateral <- function(panel, index, n_leg) {
   # TODO: Assert types
 
   paste0(panel$name, "-phase.change-", index, "-leg.lateral-", n_leg)
