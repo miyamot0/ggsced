@@ -3,7 +3,7 @@
 \docType{data}
 \name{Gilroyetal2021}
 \alias{Gilroyetal2021}
-\title{Plotting data from Gilroy et al. (2015) - Treatment}
+\title{Plotting data from Gilroy et al. (2021)}
 \format{
 A data frame with 69 rows and 7 variables:
 \describe{

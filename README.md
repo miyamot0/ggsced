@@ -225,7 +225,7 @@ We welcome contributions to the `ggsced` package! Please see our [contribution g
 
 ## License
 
-This package is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This package is licensed under the GPL License. See the [LICENSE](LICENSE) file for details.
 
 ## Citation
 
