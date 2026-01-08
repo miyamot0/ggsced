@@ -1,118 +1,34 @@
-
-#' gg_sced_scale_units
-#'
-#' ...
-#'
-#' @param session_value Session associated with phase-change line
-#' @param domain_size Total size of domain per panel specification
-#'
-#' @return A proportional value given value in a panel domain
-#'
-gg_sced_scale_units <- function(session_value, domain_size) {
-  (session_value - domain_size[1]) / (domain_size[2] - domain_size[1])
-}
-
-#' gg_sced_style_y
-#'
-#' ...
-#'
-#' @param expansion Percentage of axis to pad (top/bottom) to break axis
-#' @param lwd Width of axis line (clipping on)
-#' @param col Color of axis drawn (default = 'black')
-#'
-#' @return Annotation to simulate a disconnected y-axis via expansion
-#' @export
-#'
-gg_sced_style_y <- function(expansion = 0.00, lwd = 2, col = "black") {
-  annotation_custom(
-    grid::linesGrob(x = c(0, 0),
-                    y = grid::unit(c(expansion, 1 - expansion), "npc"),
-                    gp = grid::gpar(lwd = lwd, col = col))
-  )
-}
-
-#' gg_sced_style_x
-#'
-#' ...
-#'
-#' @param expansion Percentage of axis to pad (top/bottom) to break axis
-#' @param lwd Width of axis line (clipping on)
-#' @param col Color of axis drawn (default = 'black')
-#'
-#' @return Annotation to simulate a disconnected y-axis via expansion
-#' @export
-#'
-gg_sced_style_x <- function(expansion = 0.00, lwd = 2, col = "black") {
-  annotation_custom(
-    grid::linesGrob(x = grid::unit(c(expansion, 1 - expansion), "npc"),
-                    y = c(0, 0),
-                    gp = grid::gpar(lwd = lwd, col = col))
-  )
-}
-
-#' gg_sced_get_panels
-#'
-#' ...
-#'
-#' @param ggplot_grobs ...
-#'
-#' @return ...
-#'
-gg_sced_get_panels <- function(ggplot_grobs) {
-  # TODO: Assert types
-
-  lcl_panels = ggplot_grobs$layout
-  lcl_panels = lcl_panels[grepl("^panel", ggplot_grobs$layout$name),]
-
-  return(lcl_panels)
-}
-
-#' gg_sced_name_dogleg
-#'
-#' ...
-#'
-#' @param panel ...
-#' @param index ...
-#' @param n_leg ...
-#'
-#' @return ...
-#'
-gg_sced_name_dogleg <- function(panel, index, n_leg) {
-  # TODO: Assert types
-
-  paste0(panel$name, "-phase.change-", index, '-leg-', n_leg)
-}
-
-#' gg_sced_name_dogleg_lateral
-#'
-#' ...
-#'
-#' @param panel ...
-#' @param index ...
-#' @param n_leg ...
-#'
-#' @return ...
-#'
-gg_sced_name_dogleg_lateral <- function(panel, index, n_leg) {
-  # TODO: Assert types
-
-  paste0(panel$name, "-phase.change-", index, "-leg.lateral-", n_leg)
-}
+##
+## Copyright 2026 Shawn Gilroy, Louisiana State University
+##
+## This file is part of ggsced.
+##
+## ggsced is free software: you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation, version 2.
+##
+## ggsced is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with ggsced  If not, see <http://www.gnu.org/licenses/gpl-2.0.html>.
 
 #' gg_sced
 #'
-#' ...
+#' Core exported function to facilitate the drawing of phase change lines atop a ggplot object. Primarily designed to be used *after* the plot is finalized, with the lines being the last element drawn at the highest z index (i.e., atop all elements).
 #'
-#' @param plt ...
-#' @param legs ...
-#' @param offs ...
+#' @param plt ggplot object as typically designed/printed in userspace
+#' @param legs list of 'legs' to be drawn
+#' @param offs TODO mapping of lines that require minor offset
 #'
-#' @return ...
+#' @return Finalized figure with respective phase change lines embedded.
 #' @export
 #'
 gg_sced <- function(plt, legs,
                     offs = NULL,
-                    verbose = TRUE) {
+                    verbose = FALSE) {
   if (is.null(plt)) stop('Error: Plot object undefined.')
 
   if (is.null(legs)) stop('Error: Phase change listings undefined.')
@@ -125,8 +41,6 @@ gg_sced <- function(plt, legs,
 
   # Grobs specific to data to be annotated
   lcl_panels <- gg_sced_get_panels(lcl_ggplot_grobs)
-
-  print(lcl_panels)
 
   # Number of panels as per the drawn figure
   lcl_n_panels = nrow(lcl_panels)
@@ -164,8 +78,12 @@ gg_sced <- function(plt, legs,
 
       npc_x <- gg_sced_scale_units(x_lvl, x_range)
 
-      message(paste("Draw", row, "of", lcl_n_panels, "panels, x = ", x_lvl))
-      message(paste("npc_x = ", npc_x))
+      gg_sced_output_console(paste("Draw", row, "of", lcl_n_panels,
+                                   "panels, x = ", x_lvl),
+                             verbose)
+
+      gg_sced_output_console(paste("npc_x = ", npc_x),
+                             verbose)
 
       dynamic_b = ifelse(has_more_rows == TRUE,
                          lcl_panels[row + 1, "t"] - 1,
