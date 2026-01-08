@@ -4,7 +4,7 @@
 \alias{gg_sced}
 \title{gg_sced}
 \usage{
-gg_sced(plt, legs, offs = NULL, verbose = TRUE)
+gg_sced(plt, legs, offs = NULL, verbose = FALSE)
 }
 \arguments{
 \item{plt}{ggplot object as typically designed/printed in userspace}
