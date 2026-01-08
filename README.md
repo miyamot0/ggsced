@@ -53,6 +53,8 @@ library(ggsced)
 
 ## Quick Start
 
+### Example Multiple Baseline: Gilroy et al. (2015)
+
 ```r
 library(ggsced)
 library(ggplot2)
@@ -78,14 +80,20 @@ staggered_pls <- list(
 )
 
 # Add phase change lines
-final_plot <- gg_sced(p, staggered_pls)
+gg_sced(p, staggered_pls)
 ```
-
-## Example Figures
 
 ![Gilroy et al. (2015) Figure](https://github.com/miyamot0/ggsced/blob/main/figs/GilroyEtAl2015.svg?raw=true)
 
-## Example Datasets
+### Example Augmented Multiple Baseline: Gilroy et al. (2021)
+
+```r
+...
+```
+
+![Gilroy et al. (2021) Figure](https://github.com/miyamot0/ggsced/blob/main/figs/GilroyEtAl2021.svg?raw=true)
+
+## Other Example Datasets
 
 The package includes several real research datasets for learning and demonstration:
 
