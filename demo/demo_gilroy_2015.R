@@ -49,10 +49,10 @@ staggered_pls = list(
   '3' = c(23.5, 23.5, 23.5)
 )
 
-svg(filename = 'figs/GilroyEtAl2015.svg',
-    width = 8,
-    height = 6)
+#svg(filename = 'figs/GilroyEtAl2015.svg',
+#    width = 8,
+#    height = 6)
 
 gg_sced(p, legs = staggered_pls)
 
-dev.off()
+#dev.off()
