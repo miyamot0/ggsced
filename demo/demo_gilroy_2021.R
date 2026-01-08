@@ -9,8 +9,20 @@ data <- Gilroyetal2021
 y_mult = .05
 x_mult = .02
 
+data_labels = data %>%
+  select(Participant, Condition) %>%
+  filter(Participant == "John") %>%
+  unique() %>%
+  mutate(x = c(2, 5, 8, 11, 14, 18),
+         Label = gsub("2", "", Condition),
+         y = 20)
+
+str(data)
+str(data_labels)
+
 p = ggplot(data, aes(Session, Responding,
                  group = Condition)) +
+
   geom_line() +
   geom_point(size = 2.5,
              pch = 21,
@@ -22,6 +34,12 @@ p = ggplot(data, aes(Session, Responding,
              size = 2.5,
              pch = 24,
              fill = 'white') +
+
+  geom_text(data = data_labels,
+            mapping = aes(x, y,
+                          label = Label),
+            family = "Times New Roman",
+            inherit.aes = FALSE) +
 
   scale_x_continuous(breaks = c(1:25),
                      limits = c(1, 25),
@@ -43,6 +61,7 @@ p = ggplot(data, aes(Session, Responding,
                          expand = expansion(mult = y_mult))
     )
   ) +
+
   theme(
     text = element_text(family = "Times New Roman", size = 14,
                         color = 'black'),

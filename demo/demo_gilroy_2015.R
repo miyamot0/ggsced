@@ -21,6 +21,7 @@ p = ggplot(data_set, aes(Session, Responding,
   geom_text(data = data_labels,
             mapping = aes(x, y,
                           label = Condition),
+            family = "Times New Roman",
             hjust = 0.5,
             vjust = 0.0625) +
   scale_y_continuous(name = "Percentage Accuracy",
