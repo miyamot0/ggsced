@@ -11,6 +11,12 @@ data_labels = data_set %>%
   mutate(x = c(2.5, 9, 18.5, 25.5),
          y = 100)
 
+participant_labels = data_set %>%
+  select(Participant) %>%
+  unique() %>%
+  mutate(x = rep(27, 3),
+         y = 0)
+
 y_mult = .05
 x_mult = .02
 
@@ -23,6 +29,12 @@ p = ggplot(data_set, aes(Session, Responding,
                           label = Condition),
             hjust = 0.5,
             vjust = 0.0625) +
+  geom_text(data = participant_labels,
+            mapping = aes(x, y,
+                          label = Participant),
+            inherit.aes = FALSE,
+            hjust = 1,
+            vjust = 0) +
   scale_y_continuous(name = "Percentage Accuracy",
                      limits = c(0, 102.5),
                      breaks = (0:4) * 25,
@@ -49,10 +61,10 @@ staggered_pls = list(
   '3' = c(23.5, 23.5, 23.5)
 )
 
-#svg(filename = 'figs/GilroyEtAl2015.svg',
+# svg(filename = 'figs/GilroyEtAl2015.svg',
 #    width = 8,
 #    height = 6)
 
 gg_sced(p, legs = staggered_pls)
 
-#dev.off()
+# dev.off()
