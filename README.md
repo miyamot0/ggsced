@@ -81,6 +81,10 @@ staggered_pls <- list(
 final_plot <- gg_sced(p, staggered_pls)
 ```
 
+## Example Figures
+
+![Gilroy et al. (2015) Figure](https://github.com/miyamot0/ggsced/blob/main/figs/GilroyEtAl2015.svg?raw=true)
+
 ## Example Datasets
 
 The package includes several real research datasets for learning and demonstration:
