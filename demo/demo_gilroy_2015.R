@@ -21,7 +21,6 @@ p = ggplot(data_set, aes(Session, Responding,
   geom_text(data = data_labels,
             mapping = aes(x, y,
                           label = Condition),
-            family = "Times New Roman",
             hjust = 0.5,
             vjust = 0.0625) +
   scale_y_continuous(name = "Percentage Accuracy",
@@ -35,7 +34,7 @@ p = ggplot(data_set, aes(Session, Responding,
               remove_labels = "x",
               axes = "x") +
   theme(
-    text = element_text(family = "Times New Roman", size = 14,
+    text = element_text(size = 14,
                         color = 'black'),
     panel.background = element_blank(),
     strip.background = element_blank(),
@@ -50,4 +49,10 @@ staggered_pls = list(
   '3' = c(23.5, 23.5, 23.5)
 )
 
+svg(filename = 'figs/GilroyEtAl2015.svg',
+    width = 8,
+    height = 6)
+
 gg_sced(p, legs = staggered_pls)
+
+dev.off()

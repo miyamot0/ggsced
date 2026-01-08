@@ -86,9 +86,7 @@ final_plot <- gg_sced(p, staggered_pls)
 The package includes several real research datasets for learning and demonstration:
 
 - **`Gilroyetal2015`**: Multiple baseline design data
-- **`Gilroyetal2019`**: Functional analysis design
 - **`Gilroyetal2021`**: Alternating treatment design
-- **`LozyEtAl2020`**: Treatment choice data
 - **Additional datasets**: Various challenge and simulation data for testing
 
 ## Documentation

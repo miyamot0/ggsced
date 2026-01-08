@@ -215,7 +215,7 @@ gg_sced <- function(plt, legs,
     }
   }
 
-  grid::grid.draw(lcl_ggplot_grobs)
+  final_plot = grid::grid.draw(lcl_ggplot_grobs)
 
-  invisible()
+  invisible(final_plot)
 }

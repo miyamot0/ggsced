@@ -88,4 +88,10 @@ offsets_pls = list(
   '5' = c(-1, 0, 0)
 )
 
+svg(filename = 'figs/GilroyEtAl2021.svg',
+    width = 8,
+    height = 6)
+
 gg_sced(p, legs = staggered_pls, offs = offsets_pls)
+
+dev.off()
