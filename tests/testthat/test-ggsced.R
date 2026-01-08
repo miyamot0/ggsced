@@ -1,22 +1,48 @@
-test_that("Asserts empty", {
+test_that("ggsced runs and emits messages as normal", {
   library(ggplot2)
 
-  test_data_frame = data.frame(
-    Participant = c("A", "B", "C"),
-    x = c(1, 2, 3),
-    y = c(0, 0, 0)
-  )
+  test_data_frame = data.frame(Participant = c("A", "B", "C"),
+                               x = c(1, 2, 3),
+                               y = c(0, 0, 0))
 
-  p = ggplot(test_data_frame, aes(x, y)) +
-    facet_wrap(~Participant)
-
-  staggered_pls = list(
-    '1' = c(1.5,  2.5, 3.5)
-  )
-
+  p = ggplot(test_data_frame, aes(x, y)) + facet_wrap(~Participant)
+  staggered_pls = list('1' = c(1.5,  2.5, 3.5))
   expect_no_error(gg_sced(p, legs = staggered_pls))
   expect_no_warning(gg_sced(p, legs = staggered_pls))
   expect_no_message(gg_sced(p, legs = staggered_pls))
   expect_message(gg_sced(p, legs = staggered_pls, verbose = TRUE))
+})
 
+test_that("ggsced should throw with bad plot object", {
+  staggered_pls = list('1' = c(1.5,  2.5, 3.5))
+  expect_error(gg_sced(NULL, staggered_pls),
+               "Plot object must be a valid ggplot object.")
+
+  p <- c(1)
+  expect_error(gg_sced(p, staggered_pls),
+               "Plot object must be a valid ggplot object.")
+})
+
+test_that("ggsced should throw with bad phase change list", {
+  library(ggplot2)
+
+  test_data_frame = data.frame(Participant = c("A", "B", "C"),
+                               x = c(1, 2, 3),
+                               y = c(0, 0, 0))
+
+  p = ggplot(test_data_frame, aes(x, y)) + facet_wrap(~Participant)
+
+  expect_error(gg_sced(p, legs = NA), "Phase change points must be a valid ordered list.")
+  expect_error(gg_sced(p, legs = NULL), "Phase change points must be a valid ordered list.")
+
+  staggered_pls_bad = list('1' = c(1.5,  2.5, 3.5),
+                           '2' = c(1.5,  2.5))
+
+  expect_error(gg_sced(p, staggered_pls_bad),
+               "Phase change vectors in list are not of a uniform length.")
+
+  staggered_pls_bad = list('1' = c(1.5,  2.5, 3.5),
+                           '2' = c(1.5,  2.5, '3.5'))
+
+  expect_error(gg_sced(p, staggered_pls_bad))
 })

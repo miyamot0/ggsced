@@ -29,35 +29,41 @@
 gg_sced <- function(plt, legs,
                     offs = NULL,
                     verbose = FALSE) {
-  if (is.null(plt)) stop('Error: Plot object undefined.')
 
-  if (is.null(legs)) stop('Error: Phase change listings undefined.')
+  assert::assert(!is.null(plt),
+                 ("ggplot" %in% class(plt)),
+                 msg = "Plot object must be a valid ggplot object.")
 
+  assert::assert(!is.null(legs),
+                 is.list(legs),
+                 msg = "Phase change points must be a valid ordered list.")
+
+  # TODO: Testthis
   # Actual GG object to reference
-  lcl_ggplot_build <- ggplot_build(plt)
+  lcl_ggplot_build <- ggplot2::ggplot_build(plt)
 
+  # TODO: Testthis
   # Grobs to be drawn on grid
-  lcl_ggplot_grobs <- ggplotGrob(plt)
+  lcl_ggplot_grobs <- ggplot2::ggplotGrob(plt)
 
+  # TODO: Testthis
   # Grobs specific to data to be annotated
   lcl_panels <- gg_sced_get_panels(lcl_ggplot_grobs)
 
+  # TODO: Testthis
   # Number of panels as per the drawn figure
   lcl_n_panels = nrow(lcl_panels)
 
   # Assert: Must be uniform length legs
   leg_lengths = unlist(lapply(legs, function(vec) {
-    # Assert: All elements must be numeric
-    if (is.numeric(vec) == FALSE) {
-      stop('Error: Vectors in list are not numeric in type.')
-    }
+    assert::assert(all(is.numeric(vec)),
+                   msg = "Phase change points must be of numeric type.")
 
     length(vec)
   }), use.names = FALSE)
 
-  if (length(unique(leg_lengths)) > 1) {
-    stop('Error: Vectors in list are not of uniform length')
-  }
+  assert::assert(length(unique(leg_lengths)) == 1,
+                 msg = "Phase change vectors in list are not of a uniform length.")
 
   grid::grid.newpage()
 
