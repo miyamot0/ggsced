@@ -26,6 +26,13 @@
 #'
 #' @return Finalized figure with respective phase change lines embedded.
 #' @export
+#' @importMethodsFrom assert assert
+#' @importMethodsFrom ggplot2 ggplot_build
+#' @importMethodsFrom ggplot2 ggplotGrob
+#' @importMethodsFrom grid grid.newpage
+#' @importMethodsFrom grid segmentsGrob
+#' @importMethodsFrom gtable add_grob
+#' @importMethodsFrom grid grid.draw
 #'
 ggsced <- function(plt, legs,
                    offs = NULL,

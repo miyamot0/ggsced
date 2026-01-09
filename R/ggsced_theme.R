@@ -25,6 +25,12 @@
 #'
 #' @return Annotation to simulate a disconnected y-axis via expansion
 #' @export
+#' @importMethodsFrom ggplot2 annotation_custom
+#' @importMethodsFrom grid linesGrob
+#' @importMethodsFrom grid unit
+#' @importMethodsFrom grid gpar
+#' @importMethodsFrom ggh4x facet_grid2
+#' @importMethodsFrom ggh4x facetted_pos_scales
 #'
 ggsced_style_y <- function(expansion = 0.00, lwd = 2, col = "black") {
   ggplot2::annotation_custom(

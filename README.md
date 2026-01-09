@@ -214,18 +214,9 @@ If you encounter any issues or have suggestions for improvements, please:
    - Your session info (`sessionInfo()`)
    - Expected vs. actual behavior
 
-## Contributing
-
-We welcome contributions to the `ggsced` package! Please see our [contribution guidelines](https://github.com/miyamot0/ggsced/blob/main/CONTRIBUTING.md) for details on:
-
-- Code style conventions
-- Testing requirements
-- Pull request process
-- Documentation standards
-
 ## License
 
-This package is licensed under the GPL License. See the [LICENSE](LICENSE) file for details.
+This package is licensed under the GPL License (V2+). See the [LICENSE](LICENSE) file for details.
 
 ## Citation
 
