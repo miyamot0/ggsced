@@ -21,7 +21,8 @@
 #'
 #' @param plt ggplot object as typically designed/printed in userspace
 #' @param legs list of 'legs' to be drawn
-#' @param offs TODO mapping of lines that require minor offset
+#' @param offs mapping of lines that require minor offset
+#' @param print output result directly to graphical device (default = TRUE)
 #' @param verbose Optional ability to view process output (debugging primarily)
 #'
 #' @return Finalized figure with respective phase change lines embedded.
@@ -36,31 +37,49 @@
 #'
 ggsced <- function(plt, legs,
                    offs = NULL,
+                   print = TRUE,
                    verbose = FALSE) {
 
   assert::assert(!is.null(plt),
                  ("ggplot" %in% class(plt)),
                  msg = "Plot object must be a valid ggplot object.")
 
+  ggsced_output_console("\u2705 Passes check: ggplot object valid", verbose)
+
   assert::assert(!is.null(legs),
                  is.list(legs),
                  msg = "Phase change points must be a valid ordered list.")
 
-  # TODO: Testthis
+  ggsced_output_console("\u2705 Passes check: Phase change list of correct type", verbose)
+
+  assert::assert(is.logical(print))
+  assert::assert(is.logical(verbose))
+
   # Actual GG object to reference
   lcl_ggplot_build <- ggplot2::ggplot_build(plt)
+  assert::assert(!is.null(lcl_ggplot_build),
+                 ("ggplot_built" %in% class(lcl_ggplot_build)),
+                 msg = "Failed to execute ggplot_build. Malformed input?")
 
-  # TODO: Testthis
+  ggsced_output_console("\u2705 GG Pre-render: Built successfully", verbose)
+
   # Grobs to be drawn on grid
   lcl_ggplot_grobs <- ggplot2::ggplotGrob(plt)
+  assert::assert(!is.null(lcl_ggplot_grobs),
+                 ("gTree" %in% class(lcl_ggplot_grobs)),
+                 msg = "Failed to generate gTree from ggplot object. Malformed input?")
 
-  # TODO: Testthis
+  ggsced_output_console("\u2705 GTree created: Built successfully", verbose)
+
   # Grobs specific to data to be annotated
   lcl_panels <- ggsced_get_panels(lcl_ggplot_grobs)
-
-  # TODO: Testthis
   # Number of panels as per the drawn figure
   lcl_n_panels = nrow(lcl_panels)
+  assert::assert(!is.null(lcl_n_panels),
+                 lcl_n_panels > 0,
+                 msg = "Failed to identify multiple panels")
+
+  ggsced_output_console("\u2705 Panels Extracted: Multiple panels pulled from gTree", verbose)
 
   # Assert: Must be uniform length legs
   leg_lengths = unlist(lapply(legs, function(vec) {
@@ -73,7 +92,7 @@ ggsced <- function(plt, legs,
   assert::assert(length(unique(leg_lengths)) == 1,
                  msg = "Phase change vectors in list are not of a uniform length.")
 
-  grid::grid.newpage()
+  ggsced_output_console("\u2705 Phase Change Legs: list of vectors of uniform length", verbose)
 
   n_leg = 0
 
@@ -92,12 +111,12 @@ ggsced <- function(plt, legs,
 
       npc_x <- ggsced_scale_units(x_lvl, x_range)
 
-      ggsced_output_console(paste("Draw", row, "of", lcl_n_panels,
-                                   "panels, x = ", x_lvl),
-                             verbose)
-
-      ggsced_output_console(paste("npc_x = ", npc_x),
-                             verbose)
+      # ggsced_output_console(paste("Draw", row, "of", lcl_n_panels,
+      #                              "panels, x = ", x_lvl),
+      #                        verbose)
+      #
+      # ggsced_output_console(paste("npc_x = ", npc_x),
+      #                        verbose)
 
       dynamic_b = ifelse(has_more_rows == TRUE,
                          lcl_panels[row + 1, "t"] - 1,
@@ -221,9 +240,21 @@ ggsced <- function(plt, legs,
         }
       }
     }
+
+    ggsced_output_console(paste0("\u2705 Drew Phase Change ",
+                                 n_leg, " of ", lcl_n_panels),
+                          verbose)
   }
 
-  final_plot = grid::grid.draw(lcl_ggplot_grobs)
+  if (print == TRUE) {
+    grid::grid.newpage()
+    grid::grid.draw(lcl_ggplot_grobs)
 
-  invisible(final_plot)
+    ggsced_output_console("\u2705 Figure Output: Drawn to graphical device", verbose)
+  }
+
+  ggsced_output_console("\u2705 Figure Output: Successfully output", verbose)
+
+  invisible(lcl_ggplot_grobs)
+
 }
