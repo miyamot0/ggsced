@@ -2,6 +2,10 @@
 
 [![License: MIT](https://img.shields.io/badge/License-GPL2-blue.svg)](https://opensource.org/licenses/gpl-2-0)
 [![R package](https://img.shields.io/badge/R-package-blue.svg)](https://www.r-project.org/)
+<!-- badges: start -->
+[![Codecov test coverage](https://codecov.io/gh/miyamot0/ggsced/graph/badge.svg)](https://app.codecov.io/gh/miyamot0/ggsced)
+<!-- badges: end -->
+
 
 **Utilities and helpers for Single-Case Experimental Design (SCED) using ggplot2**
 
