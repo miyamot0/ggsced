@@ -15,50 +15,6 @@
 ## You should have received a copy of the GNU General Public License
 ## along with ggsced  If not, see <http://www.gnu.org/licenses/gpl-2.0.html>.
 
-#' ggsced_internal_x_axis
-#'
-#' Internal helper class to draw a conventional x-axis per SCED publication suggestions.
-#'
-#' @param expansion Percentage of axis to pad (left/right) to break axis (Note: normalized parent units)
-#' @param lwd Width of axis line
-#' @param col Color of axis drawn (default = 'black')
-#'
-#' @return Rendering of customized x axis across facets
-#'
-#' @importMethodsFrom grid linesGrob
-#' @importMethodsFrom grid unit
-#' @importMethodsFrom grid gpar
-#' @importMethodsFrom ggh4x facet_grid2
-#' @importMethodsFrom ggh4x facetted_pos_scales
-#'
-ggsced_internal_x_axis <- function(expansion = 0.00, lwd = 2, col = "black") {
-  grid::linesGrob(x = grid::unit(c(expansion, 1 - expansion), "npc"),
-                  y = c(0, 0),
-                  gp = grid::gpar(lwd = lwd, col = col))
-}
-
-#' ggsced_internal_y_axis
-#'
-#' Internal helper class to draw a conventional y-axis per SCED publication suggestions.
-#'
-#' @param expansion Percentage of axis to pad (top/bottom) to break axis (Note: normalized parent units)
-#' @param lwd Width of axis line
-#' @param col Color of axis drawn (default = 'black')
-#'
-#' @return Rendering of customized y axis across facets
-#'
-#' @importMethodsFrom grid linesGrob
-#' @importMethodsFrom grid unit
-#' @importMethodsFrom grid gpar
-#' @importMethodsFrom ggh4x facet_grid2
-#' @importMethodsFrom ggh4x facetted_pos_scales
-#'
-ggsced_internal_y_axis <- function(expansion = 0.00, lwd = 2, col = "black") {
-  grid::linesGrob(x = c(0, 0),
-                  y = grid::unit(c(expansion, 1 - expansion), "npc"),
-                  gp = grid::gpar(lwd = lwd, col = col))
-}
-
 #' ggsced_style_y
 #'
 #' This is a convenience element designed to support a more complete interpretation of SCED-specific style conventions through ggplot. Specifically, an axis is drawn with a specific manner of expansion to support the broken axis (i.e., non-connected x/y) expected of SCED-specific publication guidelines.
@@ -69,6 +25,8 @@ ggsced_internal_y_axis <- function(expansion = 0.00, lwd = 2, col = "black") {
 #'
 #' @return Annotation to simulate a disconnected y-axis via expansion
 #' @export
+#'
+#' @importMethodsFrom ggplot2 annotation_custom
 #'
 ggsced_style_y <- function(expansion = 0.00, lwd = 2, col = "black") {
   ggplot2::annotation_custom(ggsced_internal_y_axis(expansion,
@@ -86,6 +44,8 @@ ggsced_style_y <- function(expansion = 0.00, lwd = 2, col = "black") {
 #'
 #' @return Annotation to simulate a disconnected y-axis via expansion
 #' @export
+#'
+#' @importMethodsFrom ggplot2 annotation_custom
 #'
 ggsced_style_x <- function(expansion = 0.00, lwd = 2, col = "black") {
   ggplot2::annotation_custom(ggsced_internal_x_axis(expansion,
