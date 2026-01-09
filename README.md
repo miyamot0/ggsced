@@ -216,7 +216,7 @@ If you encounter any issues or have suggestions for improvements, please:
 
 ## License
 
-This package is licensed under the GPL License (V2+). See the [LICENSE](LICENSE) file for details.
+This package is licensed under the GPL License (V2+).
 
 ## Citation
 

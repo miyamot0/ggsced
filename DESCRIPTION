@@ -1,13 +1,13 @@
 Package: ggsced
 Type: Package
-Title: ggsced: Utilities and Helpers for SCED using ggplot2
-Version: 0.1.1
+Title: Ggsced: Utilities and Helpers for SCED using ggplot2
+Version: 0.1.2
 Authors@R: person(given = "Shawn",
            family = "Gilroy",
            role = c("aut", "cre", "cph"),
            email = "sgilroy1@lsu.edu",
            comment = c(ORCID = "0000-0002-1097-8366"))
-Maintainer: Shawn Gilroy, Ph.D. <sgilroy1@lsu.edu>
+Maintainer: "Shawn Gilroy" <sgilroy1@lsu.edu>
 Description: Provides specialized visualization tools for Single-Case Experimental Design (SCED) 
     research using ggplot2. SCED studies are a crucial methodology in behavioral and 
     educational research where individual participants serve as their own controls through 
