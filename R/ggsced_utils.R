@@ -37,10 +37,8 @@ ggsced_scale_units <- function(session_value, domain_size) {
 #' @return filtered list of grobs restricted to faceted levels
 #'
 ggsced_get_panels <- function(ggplot_grobs) {
-  # TODO: Assert types
-
   lcl_panels = ggplot_grobs$layout
-  lcl_panels = lcl_panels[grepl("^panel", ggplot_grobs$layout$name),]
+  lcl_panels = lcl_panels[grepl("^panel", ggplot_grobs$layout$name), ]
 
   return(lcl_panels)
 }
@@ -56,8 +54,6 @@ ggsced_get_panels <- function(ggplot_grobs) {
 #' @return a name corresponding with unique phase-change grob element
 #'
 ggsced_name_dogleg <- function(panel, index, n_leg) {
-  # TODO: Assert types
-
   paste0(panel$name, "-phase.change-", index, '-leg-', n_leg)
 }
 
@@ -72,7 +68,5 @@ ggsced_name_dogleg <- function(panel, index, n_leg) {
 #' @return a name corresponding with unique phase-change grob element
 #'
 ggsced_name_dogleg_lateral <- function(panel, index, n_leg) {
-  # TODO: Assert types
-
   paste0(panel$name, "-phase.change-", index, "-leg.lateral-", n_leg)
 }

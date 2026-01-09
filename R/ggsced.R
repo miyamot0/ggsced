@@ -111,13 +111,6 @@ ggsced <- function(plt, legs,
 
       npc_x <- ggsced_scale_units(x_lvl, x_range)
 
-      # ggsced_output_console(paste("Draw", row, "of", lcl_n_panels,
-      #                              "panels, x = ", x_lvl),
-      #                        verbose)
-      #
-      # ggsced_output_console(paste("npc_x = ", npc_x),
-      #                        verbose)
-
       dynamic_b = ifelse(has_more_rows == TRUE,
                          lcl_panels[row + 1, "t"] - 1,
                          lcl_panel$t)
@@ -256,5 +249,4 @@ ggsced <- function(plt, legs,
   ggsced_output_console("\u2705 Figure Output: Successfully output", verbose)
 
   invisible(lcl_ggplot_grobs)
-
 }
