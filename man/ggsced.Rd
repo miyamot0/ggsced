@@ -4,14 +4,16 @@
 \alias{ggsced}
 \title{ggsced}
 \usage{
-ggsced(plt, legs, offs = NULL, verbose = FALSE)
+ggsced(plt, legs, offs = NULL, print = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{plt}{ggplot object as typically designed/printed in userspace}
 
 \item{legs}{list of 'legs' to be drawn}
 
-\item{offs}{TODO mapping of lines that require minor offset}
+\item{offs}{mapping of lines that require minor offset}
+
+\item{print}{output result directly to graphical device (default = TRUE)}
 
 \item{verbose}{Optional ability to view process output (debugging primarily)}
 }

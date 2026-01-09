@@ -15,6 +15,26 @@
 ## You should have received a copy of the GNU General Public License
 ## along with ggsced  If not, see <http://www.gnu.org/licenses/gpl-2.0.html>.
 
+#' ggsced_extract_domain
+#'
+#' Internal helper to pull respective panel parameters and assert validity.
+#'
+#' @param ggsced_extract_domain list of respective grob parameters
+#'
+#' @return numeric vector specifying size in min-max units
+#'
+ggsced_extract_domain <- function(panel_params) {
+  assert::assert(is.list(panel_params),
+                 msg = "gTree params must be of list type")
+
+  x_range <- panel_params$x.range
+
+  assert::assert(is.numeric(x_range),
+                 length(x_range) == 2)
+
+  return(x_range)
+}
+
 #' ggsced_scale_units
 #'
 #' Internal helper to discern exactly where a vertical would need to be placed within a specific grob (i.e., panel grob). Uses the domain and phase change location as a reference to convert to npc units for gtable and grid.
@@ -37,10 +57,8 @@ ggsced_scale_units <- function(session_value, domain_size) {
 #' @return filtered list of grobs restricted to faceted levels
 #'
 ggsced_get_panels <- function(ggplot_grobs) {
-  # TODO: Assert types
-
   lcl_panels = ggplot_grobs$layout
-  lcl_panels = lcl_panels[grepl("^panel", ggplot_grobs$layout$name),]
+  lcl_panels = lcl_panels[grepl("^panel", ggplot_grobs$layout$name), ]
 
   return(lcl_panels)
 }
@@ -56,8 +74,6 @@ ggsced_get_panels <- function(ggplot_grobs) {
 #' @return a name corresponding with unique phase-change grob element
 #'
 ggsced_name_dogleg <- function(panel, index, n_leg) {
-  # TODO: Assert types
-
   paste0(panel$name, "-phase.change-", index, '-leg-', n_leg)
 }
 
@@ -72,7 +88,5 @@ ggsced_name_dogleg <- function(panel, index, n_leg) {
 #' @return a name corresponding with unique phase-change grob element
 #'
 ggsced_name_dogleg_lateral <- function(panel, index, n_leg) {
-  # TODO: Assert types
-
   paste0(panel$name, "-phase.change-", index, "-leg.lateral-", n_leg)
 }

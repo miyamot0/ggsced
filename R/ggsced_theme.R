@@ -25,19 +25,13 @@
 #'
 #' @return Annotation to simulate a disconnected y-axis via expansion
 #' @export
+#'
 #' @importMethodsFrom ggplot2 annotation_custom
-#' @importMethodsFrom grid linesGrob
-#' @importMethodsFrom grid unit
-#' @importMethodsFrom grid gpar
-#' @importMethodsFrom ggh4x facet_grid2
-#' @importMethodsFrom ggh4x facetted_pos_scales
 #'
 ggsced_style_y <- function(expansion = 0.00, lwd = 2, col = "black") {
-  ggplot2::annotation_custom(
-    grid::linesGrob(x = c(0, 0),
-                    y = grid::unit(c(expansion, 1 - expansion), "npc"),
-                    gp = grid::gpar(lwd = lwd, col = col))
-  )
+  ggplot2::annotation_custom(ggsced_internal_y_axis(expansion,
+                                                    lwd,
+                                                    col))
 }
 
 #' ggsced_style_x
@@ -51,10 +45,10 @@ ggsced_style_y <- function(expansion = 0.00, lwd = 2, col = "black") {
 #' @return Annotation to simulate a disconnected y-axis via expansion
 #' @export
 #'
+#' @importMethodsFrom ggplot2 annotation_custom
+#'
 ggsced_style_x <- function(expansion = 0.00, lwd = 2, col = "black") {
-  ggplot2::annotation_custom(
-    grid::linesGrob(x = grid::unit(c(expansion, 1 - expansion), "npc"),
-                    y = c(0, 0),
-                    gp = grid::gpar(lwd = lwd, col = col))
-  )
+  ggplot2::annotation_custom(ggsced_internal_x_axis(expansion,
+                                                    lwd,
+                                                    col))
 }

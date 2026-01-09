@@ -1,7 +1,7 @@
 Package: ggsced
 Type: Package
 Title: Ggsced: Utilities and Helpers for SCED using ggplot2
-Version: 0.1.3
+Version: 0.1.4
 Authors@R: person(given = "Shawn",
            family = "Gilroy",
            role = c("aut", "cre", "cph"),
