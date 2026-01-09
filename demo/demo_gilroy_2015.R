@@ -61,12 +61,12 @@ staggered_pls = list(
   '3' = c(23.5, 23.5, 23.5)
 )
 
-png(filename = 'figs/GilroyEtAl2015.png',
-    units = "in",
-    res = 600,
-    width = 8,
-    height = 6)
+# png(filename = 'figs/GilroyEtAl2015.png',
+#     units = "in",
+#     res = 600,
+#     width = 8,
+#     height = 6)
 
 ggsced(p, legs = staggered_pls)
 
-dev.off()
+#dev.off()
