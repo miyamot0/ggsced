@@ -28,7 +28,7 @@ p = ggplot(data_set, aes(Session, Responding,
             mapping = aes(x, y,
                           label = Condition),
             hjust = 0.5,
-            vjust = 0.0625) +
+            vjust = 0.275) +
   geom_text(data = participant_labels,
             mapping = aes(x, y,
                           label = Participant),
@@ -61,12 +61,12 @@ staggered_pls = list(
   '3' = c(23.5, 23.5, 23.5)
 )
 
-# png(filename = 'figs/GilroyEtAl2015.png',
-#     units = "in",
-#     res = 600,
-#     width = 8,
-#     height = 6)
+png(filename = 'figs/GilroyEtAl2015.png',
+    units = "in",
+    res = 600,
+    width = 8,
+    height = 6)
 
 ggsced(p, legs = staggered_pls)
 
-# dev.off()
+dev.off()
