@@ -7,10 +7,23 @@ test_that("ggsced runs and emits messages as normal", {
                       ggplot2::aes(x, y)) +
     ggplot2::facet_wrap(~Participant)
   staggered_pls = list('1' = c(1.5,  2.5, 3.5))
+
   expect_no_error(ggsced(p, legs = staggered_pls))
   expect_no_warning(ggsced(p, legs = staggered_pls))
   expect_no_message(ggsced(p, legs = staggered_pls))
   expect_message(ggsced(p, legs = staggered_pls, verbose = TRUE))
+
+  staggered_pls = list('1' = c(1.5,  2.5, 3.5),
+                       '1' = c(1.5,  2.5, 3.5))
+
+  staggered_offs = list(
+    '1' = c(F, F, F),
+    '2' = c(F, T, F))
+
+  expect_no_error(ggsced(p, legs = staggered_pls, offs = staggered_offs))
+  expect_no_warning(ggsced(p, legs = staggered_pls, offs = staggered_offs))
+  expect_no_message(ggsced(p, legs = staggered_pls, offs = staggered_offs))
+  expect_message(ggsced(p, legs = staggered_pls, offs = staggered_offs, verbose = TRUE))
 })
 
 test_that("ggsced should throw with bad plot object", {
