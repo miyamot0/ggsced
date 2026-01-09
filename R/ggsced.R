@@ -73,6 +73,7 @@ ggsced <- function(plt, legs,
 
   # Grobs specific to data to be annotated
   lcl_panels <- ggsced_get_panels(lcl_ggplot_grobs)
+
   # Number of panels as per the drawn figure
   lcl_n_panels = nrow(lcl_panels)
   assert::assert(!is.null(lcl_n_panels),
@@ -85,7 +86,6 @@ ggsced <- function(plt, legs,
   leg_lengths = unlist(lapply(legs, function(vec) {
     assert::assert(all(is.numeric(vec)),
                    msg = "Phase change points must be of numeric type.")
-
     length(vec)
   }), use.names = FALSE)
 
@@ -100,16 +100,17 @@ ggsced <- function(plt, legs,
     n_leg = n_leg + 1
 
     for (row in seq_len(lcl_n_panels)) {
+      # Reference respective panel pulled from gTree
       lcl_panel = lcl_panels[row,]
 
+      # Confirm if there are panels that follow this one
       has_more_rows = row < lcl_n_panels
 
-      params = lcl_ggplot_build$layout$panel_params[[row]]
-      x_range <- params$x.range
+      # Extract range from grob (presuming uniform)
+      x_range <- ggsced_extract_domain(lcl_ggplot_build$layout$panel_params[[row]])
 
-      x_lvl = pl[row]
-
-      npc_x <- ggsced_scale_units(x_lvl, x_range)
+      # Scale x units to npc to derive desired location
+      npc_x <- ggsced_scale_units(pl[row], x_range)
 
       dynamic_b = ifelse(has_more_rows == TRUE,
                          lcl_panels[row + 1, "t"] - 1,
