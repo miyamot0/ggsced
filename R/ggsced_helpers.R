@@ -9,6 +9,7 @@
 #' @param x position on the x-axis (Default = last tick from plot object)
 #'
 #' @return a data frame that can be used with a geom_text layer
+#' @importFrom ggplot2 ggplot_build
 #' @export
 #'
 ggsced_facet_labels = function(plt, y = 0, x = NULL) {
@@ -47,10 +48,11 @@ ggsced_facet_labels = function(plt, y = 0, x = NULL) {
 #' @param y ordinate of respective label (Default = last tick from plot object)
 #'
 #' @return a data frame that can be used with a geom_text layer
+#' @importFrom ggplot2 ggplot_build
 #' @export
 #'
 ggsced_condition_labels = function(plt, y = NULL) {
-  lcl_bld <- ggplot2::ggplot_build(p)
+  lcl_bld <- ggplot2::ggplot_build(plt)
   lcl_plot_data = lcl_bld$plot$data
 
   max_y = max(lcl_bld$layout$panel_params[[1]]$y$breaks)
@@ -65,6 +67,7 @@ ggsced_condition_labels = function(plt, y = NULL) {
   g_col = gsub("~", "", deparse(lcl_bld$plot$mapping[['group']]))
 
   levels_of_facet = levels(lcl_bld$plot$data[, facet_name])
+
   levels_of_grp = levels(lcl_bld$plot$data[, g_col])
 
   lcl_data_internal = lcl_bld$data[[1]]
@@ -72,6 +75,8 @@ ggsced_condition_labels = function(plt, y = NULL) {
 
   facet_name = names(lcl_bld$layout$facet_params$rows)[1]
   unique_names = unique(lcl_plot_data[, facet_name])
+
+  print(unique_names)
 
   splits_by_g <- by(lcl_data_internal, list(lcl_data_internal$group), function(df_g) {
     lcl_x_min = min(df_g$x)
@@ -90,11 +95,12 @@ ggsced_condition_labels = function(plt, y = NULL) {
   df_splits_df = as.data.frame(df_splits)
 
   tag_frm = list()
-  tag_frm[['label']] = as.character(df_splits_df$label)
   tag_frm[[x_col]] = as.numeric(df_splits_df$x)
   tag_frm[[y_col]] = as.numeric(df_splits_df$y)
   tag_frm[[g_col]] = rep(1, nrow(df_splits_df))
-  tag_frm[[facet_name]] = rep(levels_of_facet[1], nrow(df_splits_df))
+  tag_frm[[facet_name]] = factor(rep(levels_of_facet[1], nrow(df_splits_df)),
+                                 levels = levels_of_facet)
+  tag_frm[['label']] = as.character(df_splits_df$label)
 
   tag_frm_df = as.data.frame(tag_frm)
 

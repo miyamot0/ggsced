@@ -26,14 +26,13 @@
 #' @param verbose Optional ability to view process output (debugging primarily)
 #'
 #' @return Finalized figure with respective phase change lines embedded.
+#' @importFrom assert assert
+#' @importFrom ggplot2 ggplot_build
+#' @importFrom ggplot2 ggplotGrob
+#' @import grid
+#' @importFrom gtable gtable_add_grob
+#' @import grid
 #' @export
-#' @importMethodsFrom assert assert
-#' @importMethodsFrom ggplot2 ggplot_build
-#' @importMethodsFrom ggplot2 ggplotGrob
-#' @importMethodsFrom grid grid.newpage
-#' @importMethodsFrom grid segmentsGrob
-#' @importMethodsFrom gtable add_grob
-#' @importMethodsFrom grid grid.draw
 #'
 ggsced <- function(plt, legs,
                    offs = NULL,

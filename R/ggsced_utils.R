@@ -22,6 +22,7 @@
 #' @param ggsced_extract_domain list of respective grob parameters
 #'
 #' @return numeric vector specifying size in min-max units
+#' @importFrom assert assert
 #'
 ggsced_extract_domain <- function(panel_params) {
   assert::assert(is.list(panel_params),

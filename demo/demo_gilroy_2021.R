@@ -9,29 +9,6 @@ data <- Gilroyetal2021
 y_mult = .05
 x_mult = .02
 
-data_labels = data %>%
-  select(Participant, Condition) %>%
-  filter(Participant == "John") %>%
-  unique() %>%
-  mutate(x = c(2, 5, 8, 11, 14, 18),
-         Label = gsub("2", "", Condition),
-         y = 20)
-
-series_labels = data %>%
-  filter(Participant == "John") %>%
-  select(Participant, Condition) %>%
-  slice(1:2) %>%
-  mutate(x0 = c(20.5, 20.5),
-         x1 = c(19.5, 19.5),
-         y =  c(15, 5),
-         Label = c("Responses", "Reinforcers"))
-
-participant_labels = data %>%
-  select(Participant) %>%
-  unique() %>%
-  mutate(x = rep(25, 3),
-         y = c(19.5, 9.5, 0))
-
 p = ggplot(data, aes(Session, Responding,
                  group = Condition)) +
 
@@ -47,27 +24,23 @@ p = ggplot(data, aes(Session, Responding,
              pch = 24,
              fill = 'white') +
 
-  geom_text(data = data_labels,
-            mapping = aes(x, y,
-                          label = Label),
-            inherit.aes = FALSE) +
+  # geom_text(data = data_labels,
+  #           mapping = aes(x, y,
+  #                         label = Label),
+  #           inherit.aes = FALSE) +
 
-  geom_segment(data = series_labels,
-               aes(x = x0, y, xend = x1, yend = y),
-               arrow = arrow(length = unit(0.25, "cm"))) +
+  # geom_segment(data = series_labels,
+  #              aes(x = x0, y, xend = x1, yend = y),
+  #              arrow = arrow(length = unit(0.25, "cm"))) +
 
-  geom_text(data = series_labels,
-            hjust = 0,
-            mapping = aes(x = x0 + 0.1, y,
-                          label = Label),
-            inherit.aes = FALSE) +
 
-  geom_text(data = participant_labels,
-            mapping = aes(x, y,
-                          label = Participant),
-            inherit.aes = FALSE,
-            hjust = 1,
-            vjust = 0) +
+  #
+  # geom_text(data = participant_labels,
+  #           mapping = aes(x, y,
+  #                         label = Participant),
+  #           inherit.aes = FALSE,
+  #           hjust = 1,
+  #           vjust = 0) +
 
   scale_x_continuous(breaks = c(1:25),
                      limits = c(1, 25),
@@ -103,6 +76,23 @@ p = ggplot(data, aes(Session, Responding,
   ggsced_style_x(x_mult, lwd = 2) +
   ggsced_style_y(y_mult, lwd = 2)
 
+simple_facet_labels_df = ggsced_facet_labels(p, y = 20)
+simple_facet_labels_df[2, "Responding"] <- 10
+simple_facet_labels_df[3, "Responding"] <- 8
+
+p <- p + geom_text(data = simple_facet_labels_df,
+                   hjust = 1,
+                   vjust = 0.5,
+                   mapping = aes(label = label))
+
+simple_condition_labels_df = ggsced_condition_labels(p)
+simple_condition_labels_df$label = gsub("2", "", simple_condition_labels_df$label)
+
+p <- p + geom_text(data = simple_condition_labels_df,
+                   mapping = aes(label = label),
+                   hjust = 0.5,
+                   vjust = 0.5)
+
 staggered_pls = list(
   '1' = c(3.5,   3.5,   3.5),
   '2' = c(6.5,   6.5,   8.5),
@@ -112,19 +102,11 @@ staggered_pls = list(
 )
 
 offsets_pls = list(
-  '1' = c(0, 0, 0),
-  '2' = c(0, 0, 0),
-  '3' = c(0, 0, 0),
-  '4' = c(0, 0, 0),
-  '5' = c(-1, 0, 0)
+  '1' = c(F, F, F),
+  '2' = c(F, F, F),
+  '3' = c(F, F, F),
+  '4' = c(F, F, F),
+  '5' = c(T, F, F)
 )
 
-# png(filename = 'figs/GilroyEtAl2021.png',
-#     units = "in",
-#     res = 600,
-#     width = 8,
-#     height = 6)
-
 ggsced(p, legs = staggered_pls, offs = offsets_pls)
-
-# dev.off()

@@ -24,9 +24,9 @@
 #' @param col Color of axis drawn (default = 'black')
 #'
 #' @return Annotation to simulate a disconnected y-axis via expansion
-#' @export
 #'
-#' @importMethodsFrom ggplot2 annotation_custom
+#' @importFrom ggplot2 annotation_custom
+#' @export
 #'
 ggsced_style_y <- function(expansion = 0.00, lwd = 2, col = "black") {
   ggplot2::annotation_custom(ggsced_internal_y_axis(expansion,
@@ -43,9 +43,9 @@ ggsced_style_y <- function(expansion = 0.00, lwd = 2, col = "black") {
 #' @param col Color of axis drawn (default = 'black')
 #'
 #' @return Annotation to simulate a disconnected y-axis via expansion
-#' @export
 #'
-#' @importMethodsFrom ggplot2 annotation_custom
+#' @importFrom ggplot2 annotation_custom
+#' @export
 #'
 ggsced_style_x <- function(expansion = 0.00, lwd = 2, col = "black") {
   ggplot2::annotation_custom(ggsced_internal_x_axis(expansion,

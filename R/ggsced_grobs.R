@@ -8,8 +8,7 @@
 #'
 #' @return graphical object
 #'
-#' @importMethodsFrom grid segmentsGrob
-#' @importMethodsFrom grid unit
+#' @import grid
 #'
 sced_phase_change_main_panel_grob <- function(x, segment_name) {
   grid::segmentsGrob(x0 = grid::unit(x, "npc"), x1 = grid::unit(x, "npc"),
@@ -27,8 +26,7 @@ sced_phase_change_main_panel_grob <- function(x, segment_name) {
 #'
 #' @return graphical object
 #'
-#' @importMethodsFrom grid segmentsGrob
-#' @importMethodsFrom grid unit
+#' @import grid
 #'
 sced_phase_change_simple_lateral_grob <- function(x0, x1, segment_name) {
   grid::segmentsGrob(x0 = grid::unit(x0, "npc"),
@@ -48,8 +46,7 @@ sced_phase_change_simple_lateral_grob <- function(x0, x1, segment_name) {
 #'
 #' @return graphical object
 #'
-#' @importMethodsFrom grid segmentsGrob
-#' @importMethodsFrom grid unit
+#' @import grid
 #'
 sced_phase_change_complex_lateral_grob <- function(x1, x2, segment_name) {
   grid::segmentsGrob(x0 = grid::unit(x1, "npc"),
@@ -68,8 +65,7 @@ sced_phase_change_complex_lateral_grob <- function(x1, x2, segment_name) {
 #'
 #' @return graphical object
 #'
-#' @importMethodsFrom grid segmentsGrob
-#' @importMethodsFrom grid unit
+#' @import grid
 #'
 sced_phase_change_complex_lateral_pre_grob <- function(x, segment_name) {
   grid::segmentsGrob(x0 = grid::unit(x, "npc"),
@@ -88,8 +84,7 @@ sced_phase_change_complex_lateral_pre_grob <- function(x, segment_name) {
 #'
 #' @return graphical object
 #'
-#' @importMethodsFrom grid segmentsGrob
-#' @importMethodsFrom grid unit
+#' @import grid
 #'
 sced_phase_change_complex_lateral_post_grob <- function(x, segment_name) {
   grid::segmentsGrob(x0 = grid::unit(x, "npc"),
@@ -109,11 +104,7 @@ sced_phase_change_complex_lateral_post_grob <- function(x, segment_name) {
 #'
 #' @return Rendering of customized x axis across facets
 #'
-#' @importMethodsFrom grid linesGrob
-#' @importMethodsFrom grid unit
-#' @importMethodsFrom grid gpar
-#' @importMethodsFrom ggh4x facet_grid2
-#' @importMethodsFrom ggh4x facetted_pos_scales
+#' @import grid
 #'
 ggsced_internal_x_axis <- function(expansion = 0.00, lwd = 2, col = "black") {
   grid::linesGrob(x = grid::unit(c(expansion, 1 - expansion), "npc"),
@@ -131,11 +122,7 @@ ggsced_internal_x_axis <- function(expansion = 0.00, lwd = 2, col = "black") {
 #'
 #' @return Rendering of customized y axis across facets
 #'
-#' @importMethodsFrom grid linesGrob
-#' @importMethodsFrom grid unit
-#' @importMethodsFrom grid gpar
-#' @importMethodsFrom ggh4x facet_grid2
-#' @importMethodsFrom ggh4x facetted_pos_scales
+#' @import grid
 #'
 ggsced_internal_y_axis <- function(expansion = 0.00, lwd = 2, col = "black") {
   grid::linesGrob(x = c(0, 0),
