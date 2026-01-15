@@ -1,5 +1,3 @@
-rm(list = ls())
-
 library(ggsced)
 library(tidyverse)
 library(ggh4x)
@@ -10,7 +8,7 @@ y_mult = .05
 x_mult = .02
 
 p = ggplot(data, aes(Session, Responding,
-                 group = Condition)) +
+                     group = Condition)) +
 
   geom_line() +
   geom_point(size = 2.5,
@@ -23,25 +21,6 @@ p = ggplot(data, aes(Session, Responding,
              size = 2.5,
              pch = 24,
              fill = 'white') +
-
-  # geom_text(data = data_labels,
-  #           mapping = aes(x, y,
-  #                         label = Label),
-  #           inherit.aes = FALSE) +
-
-  # geom_segment(data = series_labels,
-  #              aes(x = x0, y, xend = x1, yend = y),
-  #              arrow = arrow(length = unit(0.25, "cm"))) +
-
-
-  #
-  # geom_text(data = participant_labels,
-  #           mapping = aes(x, y,
-  #                         label = Participant),
-  #           inherit.aes = FALSE,
-  #           hjust = 1,
-  #           vjust = 0) +
-
   scale_x_continuous(breaks = c(1:25),
                      limits = c(1, 25),
                      expand = expansion(mult = x_mult)) +
@@ -65,7 +44,6 @@ p = ggplot(data, aes(Session, Responding,
                          expand = expansion(mult = y_mult))
     )
   ) +
-
   theme(
     text = element_text(size = 14,
                         color = 'black'),
@@ -92,6 +70,32 @@ p <- p + geom_text(data = simple_condition_labels_df,
                    mapping = aes(label = label),
                    hjust = 0.5,
                    vjust = 0.5)
+
+# Create extra rows for Bx Labels
+extra_labels_df <- simple_condition_labels_df[1:2,]
+extra_labels_df$Session <- 21.25
+extra_labels_df$x0 <- 21
+extra_labels_df$x1 <- 19.5
+extra_labels_df$y <- 15
+
+extra_labels_df[1, "label"] <- 'Responding'
+extra_labels_df[1, "Responding"] <- 15
+
+extra_labels_df[2, "label"] <- 'Reinforcers'
+extra_labels_df[2, "Responding"] <- 5
+extra_labels_df[2, "y"] <- 5
+
+p <- p + geom_text(data = extra_labels_df,
+                   mapping = aes(label = label),
+                   hjust = 0,
+                   vjust = 0.5)
+
+p <- p + geom_segment(data = extra_labels_df,
+                      mapping = aes(x = x0,
+                                    y,
+                                    xend = x1,
+                                    yend = y),
+                      arrow = arrow(length = unit(0.25, "cm")))
 
 staggered_pls = list(
   '1' = c(3.5,   3.5,   3.5),

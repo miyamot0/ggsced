@@ -41,18 +41,18 @@ simple_condition_labels_df[4, "Session"] <- 9
 p <- p + geom_text(data = simple_condition_labels_df,
                    mapping = aes(label = label),
                    hjust = 0.5,
-                   vjust = 0.25)
+                   vjust = 0.325)
 
 staggered_pls = list('1' = c(4.5,  11.5, 18.5),
                      '2' = c(13.5, 20.5, 23.5),
                      '3' = c(23.5, 23.5, 23.5))
 
-# png(filename = 'figs/GilroyEtAl2015.png',
-#     units = "in",
-#     res = 600,
-#     width = 8,
-#     height = 6)
+png(filename = 'figs/GilroyEtAl2015.png',
+    units = "in",
+    res = 600,
+    width = 8,
+    height = 6)
 
 ggsced(p, legs = staggered_pls)
 
-#dev.off()
+dev.off()

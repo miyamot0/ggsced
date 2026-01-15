@@ -1,6 +1,6 @@
 Package: ggsced
 Type: Package
-Title: Ggsced: Utilities and Helpers for SCED using ggplot2
+Title: Utilities and Helpers for Single Case Experimental Design (SCED) using 'ggplot2'
 Version: 0.1.5
 Authors@R: person(given = "Shawn",
            family = "Gilroy",
@@ -8,9 +8,9 @@ Authors@R: person(given = "Shawn",
            email = "sgilroy1@lsu.edu",
            comment = c(ORCID = "0000-0002-1097-8366"))
 Description: Provides specialized visualization tools for Single-Case Experimental Design (SCED) 
-    research using ggplot2. SCED studies are a crucial methodology in behavioral and 
+    research using 'ggplot2'. SCED studies are a crucial methodology in behavioral and 
     educational research where individual participants serve as their own controls through 
-    carefully designed experimental phases. This package extends ggplot2 to create 
+    carefully designed experimental phases. This package extends 'ggplot2' to create 
     publication-ready graphics with professional phase change lines, support for multiple 
     baseline designs, and styling functions that follow SCED visualization conventions. 
     Key functions include adding phase change demarcation lines to existing plots and 
