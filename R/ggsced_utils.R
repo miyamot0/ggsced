@@ -19,7 +19,7 @@
 #'
 #' Internal helper to pull respective panel parameters and assert validity.
 #'
-#' @param ggsced_extract_domain list of respective grob parameters
+#' @param panel_params respective parameters of panel grob
 #'
 #' @return numeric vector specifying size in min-max units
 #' @importFrom assert assert

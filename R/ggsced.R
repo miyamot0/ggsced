@@ -29,8 +29,8 @@
 #' @importFrom assert assert
 #' @importFrom ggplot2 ggplot_build
 #' @importFrom ggplot2 ggplotGrob
-#' @import grid
 #' @importFrom gtable gtable_add_grob
+#' @import ggh4x
 #' @import grid
 #' @export
 #'

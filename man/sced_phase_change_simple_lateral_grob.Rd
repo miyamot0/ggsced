@@ -7,11 +7,11 @@
 sced_phase_change_simple_lateral_grob(x0, x1, segment_name)
 }
 \arguments{
+\item{x0}{value corresponding to respective domain in npc units}
+
 \item{x1}{value corresponding to respective domain in npc units}
 
 \item{segment_name}{name associated with object}
-
-\item{x2}{value corresponding to respective domain in npc units}
 }
 \value{
 graphical object
