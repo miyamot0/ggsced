@@ -1,7 +1,7 @@
 Package: ggsced
 Type: Package
 Title: Utilities and Helpers for Single Case Experimental Design (SCED) using 'ggplot2'
-Version: 0.1.5
+Version: 0.1.6
 Authors@R: person(given = "Shawn",
            family = "Gilroy",
            role = c("aut", "cre", "cph"),

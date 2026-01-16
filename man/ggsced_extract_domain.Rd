@@ -7,7 +7,7 @@
 ggsced_extract_domain(panel_params)
 }
 \arguments{
-\item{ggsced_extract_domain}{list of respective grob parameters}
+\item{panel_params}{respective parameters of panel grob}
 }
 \value{
 numeric vector specifying size in min-max units

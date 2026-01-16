@@ -4,12 +4,12 @@
 \alias{sced_phase_change_complex_lateral_grob}
 \title{sced_phase_change_complex_lateral_grob}
 \usage{
-sced_phase_change_complex_lateral_grob(x1, x2, segment_name)
+sced_phase_change_complex_lateral_grob(x0, x1, segment_name)
 }
 \arguments{
-\item{x1}{value corresponding to respective domain in npc units}
+\item{x0}{value corresponding to respective domain in npc units}
 
-\item{x2}{value corresponding to respective domain in npc units}
+\item{x1}{value corresponding to respective domain in npc units}
 
 \item{segment_name}{name associated with object}
 }

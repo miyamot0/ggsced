@@ -20,8 +20,8 @@ sced_phase_change_main_panel_grob <- function(x, segment_name) {
 #'
 #' This is a helper class to standardize drawing grobs
 #'
+#' @param x0 value corresponding to respective domain in npc units
 #' @param x1 value corresponding to respective domain in npc units
-#' @param x2 value corresponding to respective domain in npc units
 #' @param segment_name name associated with object
 #'
 #' @return graphical object
@@ -40,17 +40,17 @@ sced_phase_change_simple_lateral_grob <- function(x0, x1, segment_name) {
 #'
 #' This is a helper class to standardize drawing grobs
 #'
+#' @param x0 value corresponding to respective domain in npc units
 #' @param x1 value corresponding to respective domain in npc units
-#' @param x2 value corresponding to respective domain in npc units
 #' @param segment_name name associated with object
 #'
 #' @return graphical object
 #'
 #' @import grid
 #'
-sced_phase_change_complex_lateral_grob <- function(x1, x2, segment_name) {
-  grid::segmentsGrob(x0 = grid::unit(x1, "npc"),
-                     x1 = grid::unit(x2, "npc"),
+sced_phase_change_complex_lateral_grob <- function(x0, x1, segment_name) {
+  grid::segmentsGrob(x0 = grid::unit(x0, "npc"),
+                     x1 = grid::unit(x1, "npc"),
                      y0 = grid::unit(0.5, "npc"),
                      y1 = grid::unit(0.5, "npc"),
                      name = segment_name)
